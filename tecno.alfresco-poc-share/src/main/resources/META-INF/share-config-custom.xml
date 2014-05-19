@@ -1,0 +1,26 @@
+<alfresco-config>
+	<config evaluator="string-compare" condition="DocumentLibrary">
+		<!-- Used by the "Manage Aspects" action -->
+		<aspects>
+			<!-- Aspects that a user can see -->
+			<visible>
+				<aspect name="tecno:revisable" />
+			</visible>
+
+			<!-- Aspects that a user can add. Same as "visible" if left empty -->
+			<addable>
+			</addable>
+
+			<!-- Aspects that a user can remove. Same as "visible" if left empty -->
+			<removeable>
+			</removeable>
+		</aspects>
+
+		<!-- Used by the "Change Type" action -->
+		<types>
+			<type name="cm:content">
+				<subtype name="tecno:adquisicion" />
+			</type>
+		</types>
+	</config>
+</alfresco-config>

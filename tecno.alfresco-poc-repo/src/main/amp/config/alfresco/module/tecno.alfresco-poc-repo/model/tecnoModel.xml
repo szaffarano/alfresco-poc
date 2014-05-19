@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="tecno:tecnoModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>Modelo de datos de Tecno</description>
+	<author>Sebastián Zaffarano</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+	</imports>
+
+	<namespaces>
+		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
+	</namespaces>
+
+	<types>
+		<type name="tecno:itemAdquirido">
+			<title>Items Adquiridos</title>
+			<properties>
+				<property name="tecno:nombre">
+					<title>Nombre</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:descripcion">
+					<title>Descripcion</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:importeRevision">
+					<title>Importe de la revision</title>
+					<type>d:double</type>
+				</property>
+			</properties>
+		</type>
+
+		<type name="tecno:adquisicion">
+			<title>Adquisicion</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="tecno:responsable">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:fechaAlta">
+					<type>d:date</type>
+				</property>
+			</properties>
+			<associations>
+				<association name="tecno:archivos">
+					<source>
+						<mandatory>true</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>cm:content</class>
+						<mandatory>true</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+				<association name="tecno:items">
+					<source>
+						<mandatory>true</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>tecno:itemAdquirido</class>
+						<mandatory>true</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+		</type>
+	</types>
+
+	<aspects>
+		<aspect name="tecno:revisable">
+			<title>Revisable</title>
+			<properties>
+				<property name="tecno:motivo">
+					<title>Motivo</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:importe">
+					<title>Importe</title>
+					<type>d:double</type>
+				</property>
+			</properties>
+		</aspect>
+	</aspects>
+
+</model>
