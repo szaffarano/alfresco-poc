@@ -4,7 +4,7 @@
 		<aspects>
 			<!-- Aspects that a user can see -->
 			<visible>
-				<aspect name="tecno:revisable" />
+				<aspect name="tecno:incumplido" />
 			</visible>
 
 			<!-- Aspects that a user can add. Same as "visible" if left empty -->
@@ -19,117 +19,28 @@
 		<!-- Used by the "Change Type" action -->
 		<types>
 			<type name="cm:content">
-				<subtype name="tecno:adquisicion" />
+				<subtype name="tecno:form1900" />
 			</type>
 		</types>
 	</config>
 
-	<config evaluator="node-type" condition="tecno:adquisicion">
+	<config evaluator="node-type" condition="tecno:form1900">
 		<forms>
 			<!-- Default form configuration for the cm:content type -->
 			<form>
 				<field-visibility>
 					<show id="cm:name" />
 					<show id="cm:title" force="true" />
-					<show id="cm:description" force="true" />
-					<show id="mimetype" />
-					<show id="cm:author" force="true" />
-					<show id="size" for-mode="view" />
-					<show id="cm:creator" for-mode="view" />
-					<show id="cm:created" for-mode="view" />
-					<show id="cm:modifier" for-mode="view" />
-					<show id="cm:modified" for-mode="view" />
 
-					<!-- tags and categories -->
-					<show id="cm:taggable" for-mode="edit" force="true" />
-					<show id="cm:categories" />
-
-					<!-- cm:dublincore aspect -->
-					<show id="cm:publisher" />
-					<show id="cm:contributor" />
-					<show id="cm:type" />
-					<show id="cm:identifier" />
-					<show id="cm:dcsource" />
-					<show id="cm:coverage" />
-					<show id="cm:rights" />
-					<show id="cm:subject" />
-
-					<!-- cm:complianceable aspect -->
-					<show id="cm:removeAfter" />
-
-					<!-- cm:effectivity aspect -->
-					<show id="cm:from" />
-					<show id="cm:to" />
-
-					<!-- cm:summarizable aspect -->
-					<show id="cm:summary" />
-
-					<!-- cm:translatable aspect -->
-					<show id="cm:translations" />
-
-					<!-- cm:localizable aspect -->
-					<show id="cm:locale" />
-
-					<!-- cm:ownable aspect -->
-					<show id="cm:owner" />
-
-					<!-- cm:attachable aspect -->
-					<show id="cm:attachments" />
-
-					<!-- cm:emailed aspect -->
-					<show id="cm:originator" />
-					<show id="cm:addressee" />
-					<show id="cm:addressees" />
-					<show id="cm:sentdate" />
-					<show id="cm:subjectline" />
-
-					<!-- exif:exif aspect -->
-					<show id="exif:dateTimeOriginal" />
-					<show id="exif:pixelXDimension" />
-					<show id="exif:pixelYDimension" />
-					<show id="exif:exposureTime" />
-					<show id="exif:fNumber" />
-					<show id="exif:flash" />
-					<show id="exif:focalLength" />
-					<show id="exif:isoSpeedRatings" />
-					<show id="exif:manufacturer" />
-					<show id="exif:model" />
-					<show id="exif:software" />
-					<show id="exif:orientation" />
-					<show id="exif:xResolution" />
-					<show id="exif:yResolution" />
-					<show id="exif:resolutionUnit" />
-
-					<!-- audio:audio aspect -->
-					<show id="audio:album" />
-					<show id="audio:artist" />
-					<show id="audio:composer" />
-					<show id="audio:engineer" />
-					<show id="audio:genre" />
-					<show id="audio:trackNumber" />
-					<show id="audio:releaseDate" />
-					<show id="audio:sampleRate" />
-					<show id="audio:sampleType" />
-					<show id="audio:channelType" />
-					<show id="audio:compressor" />
-
-					<!-- cm:indexControl aspect -->
-					<show id="cm:isIndexed" />
-					<show id="cm:isContentIndexed" />
-
-					<!-- cm:geographic aspect -->
-					<show id="cm:latitude" />
-					<show id="cm:longitude" />
-
-					<!-- surf:widget aspect -->
-					<show id="surf:widgetType" />
-					<show id="surf:mid" />
-					<show id="surf:label" />
-
-					<show id="tecno:responsable" />
-					<show id="tecno:fechaAlta" />
-
-					<show id="tecno:archivos" />
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:pdf" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<appearance>
@@ -141,43 +52,16 @@
 					<field id="cm:title">
 						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
 					</field>
-					<field id="cm:description">
-						<control>
-							<control-param name="activateLinks">true</control-param>
-						</control>
-					</field>
-					<field id="mimetype">
-						<control template="/org/alfresco/components/form/controls/mimetype.ftl" />
-					</field>
-					<field id="size">
-						<control template="/org/alfresco/components/form/controls/size.ftl" />
-					</field>
-					<field id="cm:taggable">
-						<control>
-							<control-param name="compactMode">true</control-param>
-							<control-param name="params">aspect=cm:taggable</control-param>
-							<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
-							<control-param name="createNewItemIcon">tag</control-param>
-						</control>
-					</field>
-					<field id="cm:categories">
-						<control>
-							<control-param name="compactMode">true</control-param>
-						</control>
-					</field>
-					<field id="cm:originator" read-only="true" />
-					<field id="cm:addressee" read-only="true" />
-					<field id="cm:addressees" read-only="true" />
-					<field id="cm:sentdate" read-only="true" />
-					<field id="cm:subjectline" read-only="true" />
-
-					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
-					</field>
-					<field id="tecno:items" label-id="assoc.tecno_items">
-					</field>
-
+					<field id="tecno:areaResponsable" label-id="prop.tecno_areaResponsable" />
+					<field id="tecno:direccion" label-id="prop.tecno_direccion" />
+					<field id="tecno:domicilio" label-id="prop.tecno_domicilio" />
+					<field id="tecno:expediente" label-id="prop.tecno_expediente" />
+					<field id="tecno:ordenCompra" label-id="prop.tecno_ordenCompra" />
+					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
+					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
+					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>
 
@@ -186,14 +70,17 @@
 				<field-visibility>
 					<show id="cm:name" />
 					<show id="cm:title" force="true" />
-					<show id="cm:description" force="true" />
-					<!-- tags and categories -->
-					<show id="cm:taggable" for-mode="edit" force="true" />
-					<show id="cm:categories" />
 
-					<show id="tecno:responsable" />
-					<show id="tecno:fechaAlta" />
-					<show id="tecno:archivos" />
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+					<show id="tecno:objetoServicio" />
+
+					<show id="tecno:pdf" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
@@ -206,31 +93,16 @@
 					<field id="cm:title">
 						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
 					</field>
-					<field id="cm:description">
-						<control>
-							<control-param name="activateLinks">true</control-param>
-						</control>
-					</field>
-					<field id="cm:taggable">
-						<control>
-							<control-param name="compactMode">true</control-param>
-							<control-param name="params">aspect=cm:taggable</control-param>
-							<control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
-							<control-param name="createNewItemIcon">tag</control-param>
-						</control>
-					</field>
-					<field id="cm:categories">
-						<control>
-							<control-param name="compactMode">true</control-param>
-						</control>
-					</field>
-
-					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
-					</field>
-					<field id="tecno:items" label-id="assoc.tecno_items">
-					</field>
+					<field id="tecno:areaResponsable" label-id="prop.tecno_areaResponsable" />
+					<field id="tecno:direccion" label-id="prop.tecno_direccion" />
+					<field id="tecno:domicilio" label-id="prop.tecno_domicilio" />
+					<field id="tecno:expediente" label-id="prop.tecno_expediente" />
+					<field id="tecno:ordenCompra" label-id="prop.tecno_ordencompra" />
+					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
+					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
+					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>
 
@@ -239,13 +111,16 @@
 				<field-visibility>
 					<show id="cm:name" />
 					<show id="cm:title" force="true" />
-					<show id="cm:description" force="true" />
-					<show id="cm:content" force="true" />
 
-
-					<show id="tecno:responsable" />
-					<show id="tecno:fechaAlta" />
-					<show id="tecno:archivos" />
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:pdf" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<appearance>
@@ -257,33 +132,32 @@
 					<field id="cm:title">
 						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
 					</field>
-					<field id="cm:content">
-						<control>
-							<control-param name="editorAppearance">explorer</control-param>
-							<control-param name="forceEditor">true</control-param>
-						</control>
-					</field>
 
-					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
-					</field>
-
-					<field id="tecno:items" label-id="assoc.tecno_items">
-					</field>
+					<field id="tecno:areaResponsable" label-id="prop.tecno_areaResponsable" />
+					<field id="tecno:direccion" label-id="prop.tecno_direccion" />
+					<field id="tecno:domicilio" label-id="prop.tecno_domicilio" />
+					<field id="tecno:expediente" label-id="prop.tecno_expediente" />
+					<field id="tecno:ordenCompra" label-id="prop.tecno_ordencompra" />
+					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
+					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
+					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>
 		</forms>
 	</config>
 
-	<config evaluator="aspect" condition="tecno:revisable">
+	<config evaluator="aspect" condition="tecno:incumplido">
 		<forms>
 			<form>
 				<field-visibility>
+					<show id="tecno:numero" />
 					<show id="tecno:motivo" />
 					<show id="tecno:importe" />
 				</field-visibility>
 				<appearance>
+					<field id="tecno:motivo" label-id="prop.tecno_numero" />
 					<field id="tecno:motivo" label-id="prop.tecno_motivo" />
 					<field id="tecno:importe" label-id="prop.tecno_importe" />
 				</appearance>
@@ -295,51 +169,13 @@
 		<advanced-search>
 			<!-- Forms for the advanced search type list -->
 			<forms>
-				<form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content</form>
-				<form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
-				<form labelId="type.tecno_adquisicion" descriptionId="search.form.desc.tecno_adquisicion">tecno:adquisicion</form>
+				<form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content
+				</form>
+				<form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder
+				</form>
+				<form labelId="search.form.tecno_form1900" descriptionId="search.form.desc.tecno_form1900">tecno:form1900
+				</form>
 			</forms>
 		</advanced-search>
 	</config>
-
-
-	<config evaluator="model-type" condition="tecno:adquisicion">
-		<forms>
-			<!-- Search form -->
-			<form id="search">
-				<field-visibility>
-					<show id="cm:name" />
-					<show id="cm:title" force="true" />
-					<show id="cm:description" force="true" />
-					<show id="mimetype" />
-					<show id="cm:modified" />
-					<show id="cm:modifier" />
-
-					<show id="tecno:responsable" />
-					<show id="tecno:fechaAlta" />
-				</field-visibility>
-				<appearance>
-					<field id="mimetype">
-						<control template="/org/alfresco/components/form/controls/mimetype.ftl" />
-					</field>
-					<field id="cm:modifier">
-						<control>
-							<control-param name="forceEditable">true</control-param>
-						</control>
-					</field>
-					<field id="cm:modified">
-						<control template="/org/alfresco/components/form/controls/daterange.ftl" />
-					</field>
-					<field id="tecno:responsable" label-id="prop.tecno_responsable">
-						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
-					</field>
-					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta">
-						<control template="/org/alfresco/components/form/controls/textfield.ftl" />
-					</field>
-
-				</appearance>
-			</form>
-		</forms>
-	</config>
-
 </alfresco-config>

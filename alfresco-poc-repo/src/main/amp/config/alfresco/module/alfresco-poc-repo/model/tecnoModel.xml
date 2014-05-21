@@ -1,81 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model name="tecno:tecnoModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
 
 	<description>Modelo de datos de Tecno</description>
 	<author>Sebastián Zaffarano</author>
 	<version>1.0</version>
 
 	<imports>
-		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
 		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
 	</imports>
 
 	<namespaces>
-		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
+		<namespace uri="http://www.afip.gob.ar/model/content/1.0"
+			prefix="tecno" />
 	</namespaces>
 
 	<types>
-		<type name="tecno:itemAdquirido">
-			<title>Item Adquirido</title>
-			<properties>
-				<property name="tecno:nombre">
-					<title>Nombre</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:descripcion">
-					<title>Descripcion</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:importeRevision">
-					<title>Importe de la revision</title>
-					<type>d:double</type>
-				</property>
-			</properties>
-		</type>
-
-		<type name="tecno:adquisicion">
-			<title>Adquisicion</title>
+		<type name="tecno:form1900">
+			<title>Formulario Conformidad</title>
+			<description>Formulario de Conformidad de Servicios</description>
 			<parent>cm:content</parent>
 			<properties>
-				<property name="tecno:responsable">
+				<property name="tecno:areaResponsable">
+					<title>Area Responsable</title>
 					<type>d:text</type>
 				</property>
-				<property name="tecno:fechaAlta">
+				<property name="tecno:direccion">
+					<title>Dirección a la cual reporta</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:domicilio">
+					<title>Domicilio de la prestación</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:expediente">
+					<title>Número de expediente</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:ordenCompra">
+					<title>Orden de compra</title>
+					<type>d:long</type>
+				</property>
+				<property name="tecno:fechaInicio">
+					<title>Fecha de inicio</title>
 					<type>d:date</type>
+				</property>
+				<property name="tecno:fechaVencimiento">
+					<title>Fecha de vencimiento</title>
+					<type>d:date</type>
+				</property>
+				<property name="tecno:objetoServicio">
+					<title>Objeto o Servicio contratado</title>
+					<type>d:mltext</type>
 				</property>
 			</properties>
 			<associations>
-				<association name="tecno:archivos">
+				<association name="tecno:pdf">
+					<title>Archivo PDF</title>
+					<description>Escaneo del Formulario Físico</description>
 					<source>
 						<mandatory>false</mandatory>
-						<many>true</many>
+						<many>false</many>
 					</source>
 					<target>
 						<class>cm:content</class>
 						<mandatory>false</mandatory>
-						<many>true</many>
+						<many>false</many>
 					</target>
 				</association>
 				<association name="tecno:items">
+					<title>Renglón / Posición</title>
+					<description>Renglón / Posición e item de conformidad de acuerdo al pliego</description>
 					<source>
 						<mandatory>false</mandatory>
 						<many>true</many>
 					</source>
 					<target>
-						<class>tecno:itemAdquirido</class>
+						<class>tecno:itemPliego</class>
 						<mandatory>false</mandatory>
 						<many>true</many>
 					</target>
 				</association>
 			</associations>
 		</type>
+
+		<type name="tecno:itemPliego">
+			<title>Item del Pliego</title>
+			<properties>
+				<property name="tecno:renglon">
+					<title>Renglón Número</title>
+					<type>d:int</type>
+				</property>
+				<property name="tecno:item">
+					<title>Item</title>
+					<type>d:text</type>
+				</property>
+				<property name="tecno:cantidadServicios">
+					<title>Cantidad de servicios</title>
+					<type>d:int</type>
+				</property>
+			</properties>
+		</type>
 	</types>
 
 	<aspects>
-		<aspect name="tecno:revisable">
-			<title>Revisable</title>
+		<aspect name="tecno:incumplido">
+			<title>Descuento por incumplimiento</title>
 			<properties>
+				<property name="tecno:numero">
+					<title>Número</title>
+					<type>d:int</type>
+				</property>
 				<property name="tecno:motivo">
 					<title>Motivo</title>
 					<type>d:text</type>
