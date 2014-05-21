@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model name="tecno:tecnoModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
 
 	<description>Modelo de datos de Tecno</description>
 	<author>Sebastián Zaffarano</author>
 	<version>1.0</version>
 
 	<imports>
-		<import uri="http://www.alfresco.org/model/dictionary/1.0"
-			prefix="d" />
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
 		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
 	</imports>
 
 	<namespaces>
-		<namespace uri="http://www.afip.gob.ar/model/content/1.0"
-			prefix="tecno" />
+		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
 	</namespaces>
 
 	<types>
@@ -89,6 +87,7 @@
 
 		<type name="tecno:itemPliego">
 			<title>Item del Pliego</title>
+			<parent>cm:content</parent>
 			<properties>
 				<property name="tecno:renglon">
 					<title>Renglón Número</title>

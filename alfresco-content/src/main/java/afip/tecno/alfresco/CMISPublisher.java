@@ -24,31 +24,31 @@ public class CMISPublisher {
 		client = new CMISClient("admin", "admin");
 	}
 
-	public Document publish(String targetPath, String name, byte[] content, Map<String, Object> properties,
-			List<String> aspects) {
+	public Document publish(String targetPath, String name, byte[] content, String contentType,
+			Map<String, Object> properties, List<String> aspects) {
 		Session session = client.getSession();
-		
+
 		if (!properties.containsKey(PropertyIds.OBJECT_TYPE_ID)) {
 			throw new RuntimeException("No se puede crear un document sin tipo");
 		}
-		
+
 		ObjectType type = session.getTypeDefinition(properties.get(PropertyIds.OBJECT_TYPE_ID).toString());
 		PropertyDefinition<?> objectIdPropDef = type.getPropertyDefinitions().get(PropertyIds.OBJECT_ID);
 		String objectIdQueryName = objectIdPropDef.getQueryName();
 
 		String queryString = "SELECT " + objectIdQueryName + " FROM " + type.getQueryName();
-		
+
 		// execute query
 		ItemIterable<QueryResult> results = session.query(queryString, false);
 
 		for (QueryResult qResult : results) {
-		   String objectId = qResult.getPropertyValueByQueryName(objectIdQueryName);
-		   Document doc = (Document) session.getObject(session.createObjectId(objectId));
-		   if (doc.getName().equals(name)) {
-			   name = "Copia de " + name;
-		   }
+			String objectId = qResult.getPropertyValueByQueryName(objectIdQueryName);
+			Document doc = (Document) session.getObject(session.createObjectId(objectId));
+			if (doc.getName().equals(name)) {
+				name = "Copia de " + name;
+			}
 		}
-		
+
 		Folder folder = Folder.class.cast(session.getObjectByPath(targetPath));
 
 		if (!properties.containsKey(PropertyIds.NAME)) {
@@ -57,7 +57,7 @@ public class CMISPublisher {
 
 		InputStream stream = new ByteArrayInputStream(content);
 		ContentStream contentStream = session.getObjectFactory().createContentStream(name,
-				Long.valueOf(content.length), "text/plain", stream);
+				Long.valueOf(content.length), contentType, stream);
 
 		Document doc = folder.createDocument(properties, contentStream, VersioningState.MAJOR);
 
@@ -74,5 +74,13 @@ public class CMISPublisher {
 			doc.updateProperties(aspectProps);
 		}
 		return doc;
+	}
+
+	public void connect(String source, String target, String relationName) {
+		Map<String, String> relation = new HashMap<String, String>();
+		relation.put(PropertyIds.OBJECT_TYPE_ID, relationName);
+		relation.put(PropertyIds.SOURCE_ID, source);
+		relation.put(PropertyIds.TARGET_ID, target);
+		client.getSession().createRelationship(relation);
 	}
 }
