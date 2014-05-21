@@ -127,6 +127,7 @@
 					<show id="surf:label" />
 
 					<show id="tecno:responsable" />
+					<show id="tecno:fechaAlta" />
 
 					<show id="tecno:archivos" />
 					<show id="tecno:items" />
@@ -171,8 +172,12 @@
 					<field id="cm:subjectline" read-only="true" />
 
 					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos" />
-					<field id="tecno:items" label-id="assoc.tecno_items" />
+					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
+					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
+					</field>
+					<field id="tecno:items" label-id="assoc.tecno_items">
+					</field>
+
 				</appearance>
 			</form>
 
@@ -187,6 +192,7 @@
 					<show id="cm:categories" />
 
 					<show id="tecno:responsable" />
+					<show id="tecno:fechaAlta" />
 					<show id="tecno:archivos" />
 					<show id="tecno:items" />
 				</field-visibility>
@@ -220,8 +226,11 @@
 					</field>
 
 					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos" />
-					<field id="tecno:items" label-id="assoc.tecno_items" />
+					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
+					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
+					</field>
+					<field id="tecno:items" label-id="assoc.tecno_items">
+					</field>
 				</appearance>
 			</form>
 
@@ -235,6 +244,7 @@
 
 
 					<show id="tecno:responsable" />
+					<show id="tecno:fechaAlta" />
 					<show id="tecno:archivos" />
 					<show id="tecno:items" />
 				</field-visibility>
@@ -255,8 +265,12 @@
 					</field>
 
 					<field id="tecno:responsable" label-id="prop.tecno_responsable" />
-					<field id="tecno:archivos" label-id="assoc.tecno_archivos" />
-					<field id="tecno:items" label-id="assoc.tecno_items" />
+					<field id="tecno:fechaAlta" label-id="prop.tecno_fechaAlta" />
+					<field id="tecno:archivos" label-id="assoc.tecno_archivos">
+					</field>
+
+					<field id="tecno:items" label-id="assoc.tecno_items">
+					</field>
 				</appearance>
 			</form>
 		</forms>

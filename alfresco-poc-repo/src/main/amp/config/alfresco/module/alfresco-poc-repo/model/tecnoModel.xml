@@ -48,23 +48,23 @@
 			<associations>
 				<association name="tecno:archivos">
 					<source>
-						<mandatory>true</mandatory>
+						<mandatory>false</mandatory>
 						<many>true</many>
 					</source>
 					<target>
 						<class>cm:content</class>
-						<mandatory>true</mandatory>
+						<mandatory>false</mandatory>
 						<many>true</many>
 					</target>
 				</association>
 				<association name="tecno:items">
 					<source>
-						<mandatory>true</mandatory>
+						<mandatory>false</mandatory>
 						<many>true</many>
 					</source>
 					<target>
 						<class>tecno:itemAdquirido</class>
-						<mandatory>true</mandatory>
+						<mandatory>false</mandatory>
 						<many>true</many>
 					</target>
 				</association>
