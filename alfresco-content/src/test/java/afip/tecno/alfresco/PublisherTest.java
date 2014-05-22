@@ -16,7 +16,7 @@ public class PublisherTest {
 		CMISPublisher publisher = new CMISPublisher();
 		Map<String, Object> props = new HashMap<String, Object>();
 
-		String targetPath = "/Sitios/prueba/documentLibrary/Certificados";
+		String targetPath = "/Sitios/prueba/documentLibrary/Adquisiciones";
 		ArrayList<String> aspects = new ArrayList<String>();
 
 		props.put(PropertyIds.OBJECT_TYPE_ID, "D:tecno:form1900");
@@ -33,26 +33,15 @@ public class PublisherTest {
 		props.put("tecno:fechaInicio", today);
 		props.put("tecno:fechaVencimiento", tomorrow);
 		props.put("tecno:objetoServicio", "No se");
-		// props.put("tecno:pdf", "");
-		// props.put("tecno:items", "");
+		// props.put("tecno:adjuntos", "");
+		props.put("tecno:items", "Item1, Item2, Item3");
 
 		aspects.add("P:tecno:incumplido");
 
 		Document parent = publisher.publish(targetPath, "Prueba #1", toByteArray("form.jpg"), "image/png", props,
 				aspects);
 
-		for (int i = 0; i < 3; i++) {
-			String name = "Item " + i;
-
-			Map<String, Object> childProps = new HashMap<String, Object>();
-			childProps.put(PropertyIds.OBJECT_TYPE_ID, "D:tecno:itemPliego");
-			childProps.put("tecno:renglon", i);
-			childProps.put("tecno:item", name);
-			childProps.put("tecno:cantidadServicios", 10);
-			Document child = publisher.publish(targetPath, name, "".getBytes(), "text/plain", childProps,
-					new ArrayList<String>());
-			publisher.connect(parent.getId(), child.getId(), "R:tecno:items");
-		}
+		System.out.println("Se publico con exito nodo " + parent.getId());
 
 	}
 

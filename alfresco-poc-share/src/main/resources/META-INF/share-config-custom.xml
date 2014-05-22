@@ -40,7 +40,7 @@
 					<show id="tecno:fechaInicio" />
 					<show id="tecno:fechaVencimiento" />
 					<show id="tecno:objetoServicio" />
-					<show id="tecno:pdf" />
+					<show id="tecno:adjuntos" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<appearance>
@@ -59,8 +59,8 @@
 					<field id="tecno:ordenCompra" label-id="prop.tecno_ordenCompra" />
 					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
-					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
-					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
+					<field id="tecno:adjuntos" label-id="prop.tecno_adjuntos" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>
@@ -80,7 +80,7 @@
 					<show id="tecno:fechaVencimiento" />
 					<show id="tecno:objetoServicio" />
 
-					<show id="tecno:pdf" />
+					<show id="tecno:adjuntos" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
@@ -100,8 +100,8 @@
 					<field id="tecno:ordenCompra" label-id="prop.tecno_ordencompra" />
 					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
-					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
-					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
+					<field id="tecno:adjuntos" label-id="prop.tecno_adjunto" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>
@@ -120,7 +120,7 @@
 					<show id="tecno:fechaInicio" />
 					<show id="tecno:fechaVencimiento" />
 					<show id="tecno:objetoServicio" />
-					<show id="tecno:pdf" />
+					<show id="tecno:adjunto" />
 					<show id="tecno:items" />
 				</field-visibility>
 				<appearance>
@@ -140,8 +140,8 @@
 					<field id="tecno:ordenCompra" label-id="prop.tecno_ordencompra" />
 					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
-					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoservicio" />
-					<field id="tecno:pdf" label-id="prop.tecno_pdf" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
+					<field id="tecno:adjunto" label-id="prop.tecno_adjunto" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
 				</appearance>
 			</form>

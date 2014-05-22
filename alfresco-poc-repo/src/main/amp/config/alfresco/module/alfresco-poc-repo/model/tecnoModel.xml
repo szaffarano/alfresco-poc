@@ -54,11 +54,15 @@
 					<title>Objeto o Servicio contratado</title>
 					<type>d:mltext</type>
 				</property>
+				<property name="tecno:items">
+					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
+					<type>d:mltext</type>
+				</property>
 			</properties>
 			<associations>
-				<association name="tecno:pdf">
-					<title>Archivo PDF</title>
-					<description>Escaneo del Formulario Físico</description>
+				<association name="tecno:adjuntos">
+					<title>Archivos adjuntos</title>
+					<description>Archivos adjuntos</description>
 					<source>
 						<mandatory>false</mandatory>
 						<many>false</many>
@@ -69,39 +73,7 @@
 						<many>false</many>
 					</target>
 				</association>
-				<association name="tecno:items">
-					<title>Renglón / Posición</title>
-					<description>Renglón / Posición e item de conformidad de acuerdo al pliego</description>
-					<source>
-						<mandatory>false</mandatory>
-						<many>true</many>
-					</source>
-					<target>
-						<class>tecno:itemPliego</class>
-						<mandatory>false</mandatory>
-						<many>true</many>
-					</target>
-				</association>
 			</associations>
-		</type>
-
-		<type name="tecno:itemPliego">
-			<title>Item del Pliego</title>
-			<parent>cm:content</parent>
-			<properties>
-				<property name="tecno:renglon">
-					<title>Renglón Número</title>
-					<type>d:int</type>
-				</property>
-				<property name="tecno:item">
-					<title>Item</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:cantidadServicios">
-					<title>Cantidad de servicios</title>
-					<type>d:int</type>
-				</property>
-			</properties>
 		</type>
 	</types>
 
