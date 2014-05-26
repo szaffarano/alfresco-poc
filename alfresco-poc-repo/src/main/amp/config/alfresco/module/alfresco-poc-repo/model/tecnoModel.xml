@@ -15,7 +15,13 @@
 	<namespaces>
 		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
 	</namespaces>
-
+	<constraints>
+		<constraint name="tecno:direcciones" type="afip.tecno.alfresco.constraint.DireccionesConstraint">
+			<parameter name="allowedValues">
+				<list></list>
+			</parameter>
+		</constraint>
+	</constraints>
 	<types>
 		<type name="tecno:form1900">
 			<title>Formulario Conformidad</title>
@@ -29,6 +35,10 @@
 				<property name="tecno:direccion">
 					<title>Dirección a la cual reporta</title>
 					<type>d:text</type>
+					<multiple>true</multiple>
+					<constraints>
+						<constraint ref="tecno:direcciones" />
+					</constraints>
 				</property>
 				<property name="tecno:domicilio">
 					<title>Domicilio de la prestación</title>

@@ -5,6 +5,7 @@
 	<bean id="${project.artifactId}_resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
+				<value>alfresco.module.${project.artifactId}.messages.tecnoActions</value>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoModel</value>
 			</list>
 		</property>

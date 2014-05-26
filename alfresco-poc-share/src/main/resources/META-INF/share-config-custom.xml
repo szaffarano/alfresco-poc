@@ -5,6 +5,7 @@
 			<!-- Aspects that a user can see -->
 			<visible>
 				<aspect name="tecno:incumplido" />
+				<aspect name="cm:replaceable" />
 			</visible>
 
 			<!-- Aspects that a user can add. Same as "visible" if left empty -->
@@ -42,6 +43,9 @@
 					<show id="tecno:objetoServicio" />
 					<show id="tecno:adjuntos" />
 					<show id="tecno:items" />
+
+					<!-- cm:replaceable -->
+					<show id="cm:replaces" />
 				</field-visibility>
 				<appearance>
 					<field id="cm:name">
@@ -62,6 +66,10 @@
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjuntos" label-id="prop.tecno_adjuntos" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
+
+					<field id="cm:sentdate" read-only="true" />
+					<field id="cm:subjectline" read-only="true" />
+					<field id="cm:replaces" label-id="assoc.cm_replaces" />
 				</appearance>
 			</form>
 
@@ -82,6 +90,9 @@
 
 					<show id="tecno:adjuntos" />
 					<show id="tecno:items" />
+
+					<!-- cm:replaceable -->
+					<show id="cm:replaces" />
 				</field-visibility>
 				<edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
 				<appearance>
@@ -103,6 +114,10 @@
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjuntos" label-id="prop.tecno_adjunto" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
+
+					<field id="cm:sentdate" read-only="true" />
+					<field id="cm:subjectline" read-only="true" />
+					<field id="cm:replaces" label-id="assoc.cm_replaces" />
 				</appearance>
 			</form>
 
@@ -122,6 +137,10 @@
 					<show id="tecno:objetoServicio" />
 					<show id="tecno:adjunto" />
 					<show id="tecno:items" />
+
+					<!-- cm:replaceable -->
+					<show id="cm:replaces" />
+					1
 				</field-visibility>
 				<appearance>
 					<field id="cm:name">
@@ -143,6 +162,10 @@
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjunto" label-id="prop.tecno_adjunto" />
 					<field id="tecno:items" label-id="prop.tecno_items" />
+
+					<field id="cm:sentdate" read-only="true" />
+					<field id="cm:subjectline" read-only="true" />
+					<field id="cm:replaces" label-id="assoc.cm_replaces" />
 				</appearance>
 			</form>
 		</forms>
