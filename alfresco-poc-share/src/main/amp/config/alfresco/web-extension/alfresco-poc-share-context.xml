@@ -2,12 +2,22 @@
 
 <beans>
 	<!-- Add Someco messages -->
-	<bean id="${project.artifactId}_resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+	<bean id="${project.artifactId}_resources"
+		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoActions</value>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoModel</value>
 			</list>
+		</property>
+	</bean>
+
+	<bean id="tecno.evaluator.doclib.action.isDummyEnabled" parent="evaluator.doclib.action.value">
+		<property name="accessor" value="node.properties.tecno:enabled" />
+		<property name="comparator">
+			<bean class="org.alfresco.web.evaluator.StringEqualsComparator">
+				<property name="value" value="true" />
+			</bean>
 		</property>
 	</bean>
 </beans>

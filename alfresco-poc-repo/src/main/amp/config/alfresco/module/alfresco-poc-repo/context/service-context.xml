@@ -19,7 +19,29 @@
 		</property>
 	</bean>
 
-	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter" parent="action-executer" />
+	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter"
+		parent="action-executer" />
 
-	<bean id="move-replaced" class="afip.tecno.alfresco.action.MoveReplacedActionExecuter" parent="action-executer" />
+	<bean id="move-replaced" class="afip.tecno.alfresco.action.MoveReplacedActionExecuter"
+		parent="action-executer" />
+
+	<bean id="dummy" class="afip.tecno.alfresco.action.DummyActionExecuter"
+		parent="action-executer">
+		<property name="nodeService">
+			<ref bean="NodeService" />
+		</property>
+	</bean>
+
+	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable"
+		parent="dummy">
+		<property name="publicAction">
+			<value>false</value>
+		</property>
+	</bean>
+	<bean id="dummy-disable" class="afip.tecno.alfresco.action.DummyDisable"
+		parent="dummy">
+		<property name="publicAction">
+			<value>false</value>
+		</property>
+	</bean>
 </beans>

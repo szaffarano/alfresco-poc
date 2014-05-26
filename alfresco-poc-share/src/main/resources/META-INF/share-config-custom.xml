@@ -1,4 +1,51 @@
 <alfresco-config>
+	<!-- Actions -->
+	<config evaluator="string-compare" condition="DocLibActions">
+		<actions>
+			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
+				icon="tecno-website">
+				<param name="href">http://redmine.afip.gob.ar</param>
+				<param name="target">_blank</param>
+			</action>
+			<action id="tecno-dummy-enable" type="javascript" label="actions.tecno.dummy-enable"
+				icon="tecno-enable">
+				<param name="function">onActionSimpleRepoAction</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<param name="action">dummy-enable</param>
+				<param name="successMessage">message.dummy.enabled</param>
+				<param name="failureMessage">message.dummy.failure</param>
+				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled
+				</evaluator>
+			</action>
+			<action id="tecno-dummy-disable" type="javascript" label="actions.tecno.dummy-disable"
+				icon="tecno-disable">
+				<param name="function">onActionSimpleRepoAction</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<param name="action">dummy-disable</param>
+				<param name="successMessage">message.dummy.enabled</param>
+				<param name="failureMessage">message.dummy.failure</param>
+				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
+			</action>
+		</actions>
+
+		<actionGroups>
+			<actionGroup id="document-browse">
+				<action index="500" id="tecno-web-site" />
+				<action index="510" id="tecno-dummy-enable" />
+				<action index="520" id="tecno-dummy-disable" />
+			</actionGroup>
+			<actionGroup id="document-details">
+				<action index="500" id="tecno-web-site" />
+				<action index="510" id="tecno-dummy-enable" />
+				<action index="520" id="tecno-dummy-disable" />
+			</actionGroup>
+		</actionGroups>
+	</config>
+
 	<config evaluator="string-compare" condition="DocumentLibrary">
 		<!-- Used by the "Manage Aspects" action -->
 		<aspects>
@@ -23,6 +70,12 @@
 				<subtype name="tecno:form1900" />
 			</type>
 		</types>
+
+		<indicators>
+			<indicator id="tecno-website" index="10">
+				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
+			</indicator>
+		</indicators>
 	</config>
 
 	<config evaluator="node-type" condition="tecno:form1900">

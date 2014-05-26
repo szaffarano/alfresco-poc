@@ -15,6 +15,7 @@
 	<namespaces>
 		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
 	</namespaces>
+
 	<constraints>
 		<constraint name="tecno:direcciones" type="afip.tecno.alfresco.constraint.DireccionesConstraint">
 			<parameter name="allowedValues">
@@ -22,6 +23,7 @@
 			</parameter>
 		</constraint>
 	</constraints>
+	
 	<types>
 		<type name="tecno:form1900">
 			<title>Formulario Conformidad</title>
@@ -67,6 +69,10 @@
 				<property name="tecno:items">
 					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
 					<type>d:mltext</type>
+				</property>
+				<property name="tecno:enabled">
+					<title>Activo</title>
+					<type>d:boolean</type>
 				</property>
 			</properties>
 			<associations>
