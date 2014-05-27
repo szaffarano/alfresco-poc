@@ -2,7 +2,8 @@
 	<!-- Actions -->
 	<config evaluator="string-compare" condition="DocLibActions">
 		<actions>
-			<action id="tecno-web-site" type="link" label="actions.tecno.web-site" icon="tecno-website">
+			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
+				icon="tecno-website">
 				<param name="href">http://redmine.afip.gob.ar</param>
 				<param name="target">_blank</param>
 			</action>
@@ -118,7 +119,22 @@
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjuntos" label-id="prop.tecno_adjuntos" />
-					<field id="tecno:items" label-id="prop.tecno_items" />
+					<field id="tecno:items" label-id="prop.tecno_items">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config">
+								id, ID, number;
+								name, Item, text;
+								quantity, Quantity, number;
+								price, Price, currency;
+								paid, Was paid, radio,
+								["Yes", "No"];
+								features, Features, checkbox, ["JPEG", "MPEG", "MOV"];
+								color, Color, dropdown, ["Black", "White", "Blue"];
+								date, Date, date;
+							</control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
 
 					<field id="cm:sentdate" read-only="true" />
 					<field id="cm:subjectline" read-only="true" />
@@ -166,7 +182,23 @@
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjuntos" label-id="prop.tecno_adjunto" />
-					<field id="tecno:items" label-id="prop.tecno_items" />
+					<field id="tecno:items" label-id="prop.tecno_items">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config">
+								id, ID, number;
+								name, Item, text;
+								quantity, Quantity, number;
+								price, Price, currency;
+								paid, Was paid,
+								radio, ["Yes", "No"];
+								features, Features, checkbox, ["JPEG", "MPEG", "MOV"];
+								color, Color, dropdown, ["Black", "White", "Blue"];
+								date, Date,
+								date;
+							</control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
 
 					<field id="cm:sentdate" read-only="true" />
 					<field id="cm:subjectline" read-only="true" />
@@ -214,7 +246,22 @@
 					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
 					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
 					<field id="tecno:adjunto" label-id="prop.tecno_adjunto" />
-					<field id="tecno:items" label-id="prop.tecno_items" />
+					<field id="tecno:items" label-id="prop.tecno_items">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config">
+								id, ID, number;
+								name, Item, text;
+								quantity, Quantity, number;
+								price, Price, currency;
+								paid, Was paid, radio,
+								["Yes", "No"];
+								features, Features, checkbox, ["JPEG", "MPEG", "MOV"];
+								color, Color, dropdown, ["Black", "White", "Blue"];
+								date, Date, date;
+							</control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
 
 					<field id="cm:sentdate" read-only="true" />
 					<field id="cm:subjectline" read-only="true" />
@@ -249,13 +296,15 @@
 					<show id="scr:ratingCount" />
 				</field-visibility>
 				<appearance>
-					<field id="scr:averageRating" label-id="prop.scr_averageRating" read-only="true" />
-					<field id="scr:ratingCount" label-id="prop.scr_ratingCount" read-only="true" />
+					<field id="scr:averageRating" label-id="prop.scr_averageRating"
+						read-only="true" />
+					<field id="scr:ratingCount" label-id="prop.scr_ratingCount"
+						read-only="true" />
 				</appearance>
 			</form>
 		</forms>
 	</config>
-	
+
 	<config replace="true" evaluator="string-compare" condition="AdvancedSearch">
 		<advanced-search>
 			<!-- Forms for the advanced search type list -->

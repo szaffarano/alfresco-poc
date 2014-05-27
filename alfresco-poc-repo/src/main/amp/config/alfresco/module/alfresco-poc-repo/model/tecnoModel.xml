@@ -69,7 +69,7 @@
 				</property>
 				<property name="tecno:items">
 					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
-					<type>d:mltext</type>
+					<type>d:text</type>
 				</property>
 				<property name="tecno:enabled">
 					<title>Activo</title>
