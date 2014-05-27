@@ -14,6 +14,7 @@
 
 	<namespaces>
 		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
+		<namespace uri="http://www.afip.gob.ar/model/ratings/1.0" prefix="scr" />
 	</namespaces>
 
 	<constraints>
@@ -23,7 +24,7 @@
 			</parameter>
 		</constraint>
 	</constraints>
-	
+
 	<types>
 		<type name="tecno:form1900">
 			<title>Formulario Conformidad</title>
@@ -91,6 +92,21 @@
 				</association>
 			</associations>
 		</type>
+
+		<type name="scr:rating">
+			<title>Tecno Rating</title>
+			<parent>sys:base</parent>
+			<properties>
+				<property name="scr:rating">
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="scr:rater">
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
+		</type>
 	</types>
 
 	<aspects>
@@ -110,6 +126,38 @@
 					<type>d:double</type>
 				</property>
 			</properties>
+		</aspect>
+
+		<aspect name="scr:rateable">
+			<title>Tecno Rateable</title>
+			<properties>
+				<property name="scr:averageRating">
+					<type>d:double</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="scr:totalRating">
+					<type>d:int</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="scr:ratingCount">
+					<type>d:int</type>
+					<mandatory>false</mandatory>
+				</property>
+			</properties>
+			<associations>
+				<child-association name="scr:ratings">
+					<title>Rating</title>
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>scr:rating</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</child-association>
+			</associations>
 		</aspect>
 	</aspects>
 

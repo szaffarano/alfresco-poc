@@ -9,6 +9,11 @@
 				<value>alfresco/module/${project.artifactId}/model/tecnoModel.xml</value>
 			</list>
 		</property>
+		<property name="labels">
+			<list>
+				<value>alfresco/module/${project.artifactId}/messages/tecnoRatingsModel</value>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="${project.artifactId}_actionResourceBundles" parent="actionResourceBundles">
@@ -19,29 +24,34 @@
 		</property>
 	</bean>
 
-	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter"
-		parent="action-executer" />
+	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter" parent="action-executer" />
 
 	<bean id="move-replaced" class="afip.tecno.alfresco.action.MoveReplacedActionExecuter"
 		parent="action-executer" />
 
-	<bean id="dummy" class="afip.tecno.alfresco.action.DummyActionExecuter"
-		parent="action-executer">
+	<bean id="dummy" class="afip.tecno.alfresco.action.DummyActionExecuter" parent="action-executer">
 		<property name="nodeService">
 			<ref bean="NodeService" />
 		</property>
 	</bean>
 
-	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable"
-		parent="dummy">
+	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable" parent="dummy">
 		<property name="publicAction">
 			<value>false</value>
 		</property>
 	</bean>
-	<bean id="dummy-disable" class="afip.tecno.alfresco.action.DummyDisable"
-		parent="dummy">
+	<bean id="dummy-disable" class="afip.tecno.alfresco.action.DummyDisable" parent="dummy">
 		<property name="publicAction">
 			<value>false</value>
+		</property>
+	</bean>
+
+	<bean id="ratingBehavior" class="afip.tecno.alfresco.behavior.Rating" init-method="init">
+		<property name="nodeService">
+			<ref bean="NodeService" />
+		</property>
+		<property name="policyComponent">
+			<ref bean="policyComponent" />
 		</property>
 	</bean>
 </beans>

@@ -2,8 +2,7 @@
 	<!-- Actions -->
 	<config evaluator="string-compare" condition="DocLibActions">
 		<actions>
-			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
-				icon="tecno-website">
+			<action id="tecno-web-site" type="link" label="actions.tecno.web-site" icon="tecno-website">
 				<param name="href">http://redmine.afip.gob.ar</param>
 				<param name="target">_blank</param>
 			</action>
@@ -53,6 +52,7 @@
 			<visible>
 				<aspect name="tecno:incumplido" />
 				<aspect name="cm:replaceable" />
+				<aspect name="scr:rateable" />
 			</visible>
 
 			<!-- Aspects that a user can add. Same as "visible" if left empty -->
@@ -241,6 +241,21 @@
 		</forms>
 	</config>
 
+	<config evaluator="aspect" condition="scr:rateable">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="scr:averageRating" />
+					<show id="scr:ratingCount" />
+				</field-visibility>
+				<appearance>
+					<field id="scr:averageRating" label-id="prop.scr_averageRating" read-only="true" />
+					<field id="scr:ratingCount" label-id="prop.scr_ratingCount" read-only="true" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+	
 	<config replace="true" evaluator="string-compare" condition="AdvancedSearch">
 		<advanced-search>
 			<!-- Forms for the advanced search type list -->
