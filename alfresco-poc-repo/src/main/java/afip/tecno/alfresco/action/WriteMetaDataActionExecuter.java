@@ -2,6 +2,7 @@ package afip.tecno.alfresco.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
@@ -42,13 +43,13 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 
 	public void init() {
 		logger.info("initializing WriteMetaDataActionExecuter...");
-		//TODO: some initialization
+		// TODO: some initialization
 	}
 
 	@Override
 	protected void addParameterDefinitions(List<ParameterDefinition> paramList) {
 		logger.error("addParameterDefinitions");
-		//TODO: set parameters
+		// TODO: set parameters
 	}
 
 	@Override
@@ -56,8 +57,8 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 		logger.error("Ejecutando acción de write-meta-data");
 
 		Map<QName, Serializable> properties = nodeService.getProperties(actionedUponNodeRef);
-		for(Map.Entry<QName, Serializable> entry : properties.entrySet()){
-			if( entry.getKey() != null && entry.getValue() != null ) {
+		for (Map.Entry<QName, Serializable> entry : properties.entrySet()) {
+			if (entry.getKey() != null && entry.getValue() != null) {
 				logger.error("Property [" + entry.getKey().toString() + ", " + entry.getValue().toString() + "]");
 			}
 		}
@@ -70,48 +71,33 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 		this.nodeService = nodeService;
 	}
 
-	private void writeMetaData( Map<QName, Serializable> properties ) {
+	private void writeMetaData(Map<QName, Serializable> properties) {
 		try {
 			logger.error("FOP ExampleObj2PDF\n");
 			logger.error("Preparing...");
 
-			// Setup directories
-			//File basedir = new File(".");
-			//File outDir = new File(baseDir, "out");
-			//TODO: TEMPORAL, solo para test
-			File baseDir = new File("C:/Temp");
-			File outDir = new File("C:/Temp/");
-			outDir.mkdirs();
+			File pdffile = new File(System.getProperty("java.io.tmpdir"), "Formulario1900.pdf");
 
-			// Setup input and output
-			File xsltfile = new File(baseDir, "/resources/f19002fo.xsl");
-			File pdffile = new File(outDir, "Formulario1900.pdf");
-
-			// TODO: FOR DEBUG REMOVE LATER
+			InputStream is = null;
 			try {
-				File baseDir2 = new File(".");
-				File xsltfile2 = new File(baseDir2, "/resources/f19002fo.xsl");
-				logger.error("Stylesheet: " + xsltfile);
-				logger.error("StylesheetAbsolutePath: " + xsltfile2.getAbsolutePath());
-			} catch ( Exception exception ) {
-				logger.error(exception.toString());
+				is = Thread.currentThread().getContextClassLoader()
+						.getResourceAsStream("f19002fo.xsl");
+				logger.info("Levantando xsl de resource: " + is);
+				convertFormulario19002PDF(createSampleFormulario1900(properties), is, pdffile);
+			} finally {
+				if (is != null) {
+					is.close();
+				}
 			}
-
-			logger.error("Input: a ProjectTeam object");
-			logger.error("Stylesheet: " + xsltfile);
-			logger.error("Output: PDF (" + pdffile + ")");
-			logger.error("Transforming...");
-
-			convertFormulario19002PDF(createSampleFormulario1900(properties), xsltfile, pdffile);
-
 			logger.error("Success!");
 		} catch (Exception e) {
-			logger.error(e.toString());
+			logger.error(e.toString(), e);
 
 		}
 	}
 
-	public void convertFormulario19002PDF(Formulario1900 formulario1900, File xslt, File pdf) throws IOException, FOPException, TransformerException {
+	public void convertFormulario19002PDF(Formulario1900 formulario1900, InputStream xslt, File pdf)
+			throws IOException, FOPException, TransformerException {
 
 		FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
 		// configure foUserAgent as desired
@@ -130,7 +116,8 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 			// Setup input for XSLT transformation
 			Source src = formulario1900.getSourceForFormulario1900();
 
-			// Resulting SAX events (the generated FO) must be piped through to FOP
+			// Resulting SAX events (the generated FO) must be piped through to
+			// FOP
 			Result res = new SAXResult(fop.getDefaultHandler());
 
 			// Start XSLT transformation and FOP processing
@@ -138,19 +125,20 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 		} finally {
 			out.close();
 		}
-	}	
+	}
 
-	private Formulario1900 createSampleFormulario1900( Map<QName, Serializable> properties ) {
+	private Formulario1900 createSampleFormulario1900(Map<QName, Serializable> properties) {
 		Formulario1900 formulario1900 = new Formulario1900();
 		formulario1900.setName("Soy un formulario 1900");
-		
-		for(Map.Entry<QName, Serializable> entry : properties.entrySet()){
-			if( entry.getKey() != null && entry.getValue() != null ) {
-				//logger.error("Property [" + entry.getKey().toString() + ", " + entry.getValue().toString() + "]");
-				formulario1900.addField(new FormularioField(entry.getKey().toString(),entry.getValue().toString()));
+
+		for (Map.Entry<QName, Serializable> entry : properties.entrySet()) {
+			if (entry.getKey() != null && entry.getValue() != null) {
+				// logger.error("Property [" + entry.getKey().toString() + ", "
+				// + entry.getValue().toString() + "]");
+				formulario1900.addField(new FormularioField(entry.getKey().toString(), entry.getValue().toString()));
 			}
 		}
-		
+
 		return formulario1900;
 	}
 
