@@ -2,8 +2,7 @@
 	<!-- Actions -->
 	<config evaluator="string-compare" condition="DocLibActions">
 		<actions>
-			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
-				icon="tecno-website">
+			<action id="tecno-web-site" type="link" label="actions.tecno.web-site" icon="tecno-website">
 				<param name="href">http://redmine.afip.gob.ar</param>
 				<param name="target">_blank</param>
 			</action>
@@ -16,8 +15,7 @@
 				<param name="action">dummy-enable</param>
 				<param name="successMessage">message.dummy.enabled</param>
 				<param name="failureMessage">message.dummy.failure</param>
-				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled
-				</evaluator>
+				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
 			</action>
 			<action id="tecno-dummy-disable" type="javascript" label="actions.tecno.dummy-disable"
 				icon="tecno-disable">
@@ -30,6 +28,17 @@
 				<param name="failureMessage">message.dummy.failure</param>
 				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
 			</action>
+			
+			<action id="tecno-write-meta-data" type="javascript" label="Write Meta Data" icon="tecno-website">
+				<param name="function">onActionSimpleRepoAction</param>
+				<permissions>
+					<permission allow="true">Write</permission>
+				</permissions>
+				<param name="action">write-meta-data</param>
+				<param name="successMessage">Write metadata ok</param>
+				<param name="failureMessage">Write metadata error</param>
+			</action>
+			
 		</actions>
 
 		<actionGroups>
@@ -37,11 +46,13 @@
 				<action index="500" id="tecno-web-site" />
 				<action index="510" id="tecno-dummy-enable" />
 				<action index="520" id="tecno-dummy-disable" />
+				<action index="530" id="tecno-write-meta-data" />
 			</actionGroup>
 			<actionGroup id="document-details">
 				<action index="500" id="tecno-web-site" />
 				<action index="510" id="tecno-dummy-enable" />
 				<action index="520" id="tecno-dummy-disable" />
+				<action index="530" id="tecno-write-meta-data" />
 			</actionGroup>
 		</actionGroups>
 	</config>

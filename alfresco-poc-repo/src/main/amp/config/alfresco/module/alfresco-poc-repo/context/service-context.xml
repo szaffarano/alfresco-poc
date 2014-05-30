@@ -54,4 +54,10 @@
 			<ref bean="policyComponent" />
 		</property>
 	</bean>
+	
+	<bean id="write-meta-data" class="afip.tecno.alfresco.action.WriteMetaDataActionExecuter" parent="action-executer" init-method="init">
+		<property name="nodeService">
+			<ref bean="NodeService" />
+		</property>
+	</bean>
 </beans>

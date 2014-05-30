@@ -35,6 +35,7 @@ public class DummyActionExecuter extends ActionExecuterAbstractBase {
 	@Override
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
 		logger.error("Ejecutando acción de dummy...");
+		logger.error("test...de dummy");
 
 		Boolean enabled = (Boolean) action.getParameterValue(PARAM_ENABLED);
 
