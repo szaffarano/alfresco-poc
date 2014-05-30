@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="tecno:tecnoModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<!-- Optional meta-data about the model -->
+	<description>POC - Modelo de Conformidad</description>
+	<author>None</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0"
+			prefix="d" />
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+		<import uri="http://www.alfresco.org/model/datalist/1.0"
+			prefix="dl" />
+		<import uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecnoList" />
+	</imports>
+
+	<namespaces>
+		<namespace uri="http://www.afip.gob.ar/model/content/1.0"
+			prefix="tecno" />
+	</namespaces>
+
+	<types>
+
+		<type name="tecno:conformidad">
+			<title>Conformidad</title>
+			<parent>cm:content</parent>
+			<properties>
+				<property name="tecno:areaResponsableDeConformidad">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:direccionALaCualReporta">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:domicilioDeLaPrestacion">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:expedienteNumero">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:ordenDeCompraNro">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:fechaInicio">
+					<type>d:date</type>
+				</property>
+				<property name="tecno:fechaFin">
+					<type>d:date</type>
+				</property>
+				<property name="tecno:objetoOServicio">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:tipoServicio">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:detalleServicio">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:periodicidadPrestacion">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:periodoDesde">
+					<type>d:date</type>
+				</property>
+				<property name="tecno:periodoHasta">
+					<type>d:date</type>
+				</property>
+				<property name="tecno:proveedor">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:cuit">
+					<type>d:text</type>
+				</property>
+				<property name="tecno:remito">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:factura">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:regimenContratacion">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:descuentoPorIncumplimiento">
+					<type>d:boolean</type>
+				</property>
+				<property name="tecno:importe">
+					<type>d:double</type>
+				</property>
+				<property name="tecno:numero">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:notaCredito">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:notaDebito">
+					<type>d:int</type>
+				</property>
+				<property name="tecno:campoMultiple">
+					<type>d:text</type>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>true</stored>
+						<tokenised>true</tokenised>
+					</index>
+				</property>
+
+			</properties>
+
+			<associations>
+				<association name="tecno:conformidadArchivos">
+					<source>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</source>
+					<target>
+						<class>cm:content</class>
+						<mandatory>false</mandatory>
+						<many>true</many>
+					</target>
+				</association>
+			</associations>
+
+		</type>
+
+	</types>
+
+	<aspects>
+
+		<aspect name="tecno:aspectoUno">
+			<title>Aspecto</title>
+		</aspect>
+
+		<aspect name="tecno:aspectoDos">
+			<title>Aspecto Dos</title>
+			<parent>tecno:aspectoUno</parent>
+			<properties>
+				<property name="tecno:categories">
+					<title>Categories</title>
+					<type>d:category</type>
+					<mandatory>false</mandatory>
+					<multiple>true</multiple>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>true</stored>
+						<tokenised>false</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+	</aspects>
+
+
+</model>
