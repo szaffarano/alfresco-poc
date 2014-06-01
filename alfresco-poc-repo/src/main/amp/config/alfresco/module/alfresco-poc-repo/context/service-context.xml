@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<!-- <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'> -->
 
 <beans>
 	<bean id="${project.artifactId}_dictionaryBootstrap" parent="dictionaryModelBootstrap"
@@ -24,29 +24,34 @@
 		</property>
 	</bean>
 
-	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter" parent="action-executer" />
+	<bean id="incumplir" class="afip.tecno.alfresco.action.IncumplirActionExecuter"
+		parent="action-executer" />
 
 	<bean id="move-replaced" class="afip.tecno.alfresco.action.MoveReplacedActionExecuter"
 		parent="action-executer" />
 
-	<bean id="dummy" class="afip.tecno.alfresco.action.DummyActionExecuter" parent="action-executer">
+	<bean id="dummy" class="afip.tecno.alfresco.action.DummyActionExecuter"
+		parent="action-executer">
 		<property name="nodeService">
 			<ref bean="NodeService" />
 		</property>
 	</bean>
 
-	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable" parent="dummy">
+	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable"
+		parent="dummy">
 		<property name="publicAction">
 			<value>false</value>
 		</property>
 	</bean>
-	<bean id="dummy-disable" class="afip.tecno.alfresco.action.DummyDisable" parent="dummy">
+	<bean id="dummy-disable" class="afip.tecno.alfresco.action.DummyDisable"
+		parent="dummy">
 		<property name="publicAction">
 			<value>false</value>
 		</property>
 	</bean>
 
-	<bean id="ratingBehavior" class="afip.tecno.alfresco.behavior.Rating" init-method="init">
+	<bean id="ratingBehavior" class="afip.tecno.alfresco.behavior.Rating"
+		init-method="init">
 		<property name="nodeService">
 			<ref bean="NodeService" />
 		</property>
@@ -54,10 +59,34 @@
 			<ref bean="policyComponent" />
 		</property>
 	</bean>
-	
-	<bean id="write-meta-data" class="afip.tecno.alfresco.action.WriteMetaDataActionExecuter" parent="action-executer" init-method="init">
+
+	<bean id="write-meta-data" class="afip.tecno.alfresco.action.WriteMetaDataActionExecuter"
+		parent="action-executer" init-method="init">
 		<property name="nodeService">
 			<ref bean="NodeService" />
+		</property>
+	</bean>
+
+	<bean id="${project.artifactId}.workflowBootstrap" parent="workflowDeployer">
+		<property name="workflowDefinitions">
+			<list>
+				<props>
+					<prop key="engineId">activiti</prop>
+					<prop key="location">alfresco/module/${project.artifactId}/workflows/conformidad.bpmn</prop>
+					<prop key="mimetype">text/xml</prop>
+					<prop key="redeploy">true</prop>
+				</props>
+			</list>
+		</property>
+		<property name="models">
+			<list>
+				<value>alfresco/module/${project.artifactId}/model/tecnoWorkflowModel.xml</value>
+			</list>
+		</property>
+		<property name="labels">
+			<list>
+				<value>alfresco/module/${project.artifactId}/messages/tecnoWorkflows</value>
+			</list>
 		</property>
 	</bean>
 </beans>

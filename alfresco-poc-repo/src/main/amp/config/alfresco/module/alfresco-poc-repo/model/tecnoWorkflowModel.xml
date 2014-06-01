@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="tecnowf:tecnoWorkflowModel" xmlns="http://www.alfresco.org/model/dictionary/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+
+	<description>Modelo de datos de los workflows</description>
+	<author>Sebastián Zaffarano</author>
+	<version>1.0</version>
+
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+		<import uri="http://www.alfresco.org/model/bpm/1.0" prefix="bpm" />
+	</imports>
+
+	<namespaces>
+		<namespace uri="http://tecno.afip.gob.ar/model/workflow/1.0" prefix="tecnowf" />
+	</namespaces>
+
+	<types>
+		<type name="tecnowf:iniciarConformidadTask">
+			<parent>bpm:startTask</parent>
+			<properties>
+				<property name="tecnowf:nombre">
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<multiple>false</multiple>
+				</property>
+			</properties>
+		</type>
+	</types>
+
+</model>

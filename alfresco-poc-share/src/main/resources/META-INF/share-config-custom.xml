@@ -1,8 +1,37 @@
 <alfresco-config>
+	<config evaluator="string-compare" condition="activiti$conformidad">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="bpm:workflowDescription" />
+					<show id="packageItems" />
+					<show id="transitions" />
+					<show id="bpm:status" />
+					<show id="tecnowf:nombre" />
+				</field-visibility>
+				<appearance>
+					<set id="" appearance="title" label-id="workflow.set.general" />
+					<set id="items" appearance="title" label-id="workflow.set.items" />
+					<set id="progress" appearance="title" label-id="workflow.set.task.progress" />
+					<set id="other" appearance="title" label-id="workflow.set.other" />
+					<field id="bpm:workflowDescription" label-id="workflow.field.message">
+						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+							<control-param name="style">width: 95%</control-param>
+						</control>
+					</field>
+					<field id="packageItems" set="items" />
+					<field id="tecnowf:nombre" set="other" label-id="prop.tecnowf_nombre" />
+					<field id="bpm:status" set="progress" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
 	<!-- Actions -->
 	<config evaluator="string-compare" condition="DocLibActions">
 		<actions>
-			<action id="tecno-web-site" type="link" label="actions.tecno.web-site" icon="tecno-website">
+			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
+				icon="tecno-website">
 				<param name="href">http://redmine.afip.gob.ar</param>
 				<param name="target">_blank</param>
 			</action>
@@ -15,7 +44,8 @@
 				<param name="action">dummy-enable</param>
 				<param name="successMessage">message.dummy.enabled</param>
 				<param name="failureMessage">message.dummy.failure</param>
-				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
+				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled
+				</evaluator>
 			</action>
 			<action id="tecno-dummy-disable" type="javascript" label="actions.tecno.dummy-disable"
 				icon="tecno-disable">
@@ -28,8 +58,9 @@
 				<param name="failureMessage">message.dummy.failure</param>
 				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
 			</action>
-			
-			<action id="tecno-write-meta-data" type="javascript" label="Write Meta Data" icon="tecno-website">
+
+			<action id="tecno-write-meta-data" type="javascript" label="Write Meta Data"
+				icon="tecno-website">
 				<param name="function">onActionSimpleRepoAction</param>
 				<permissions>
 					<permission allow="true">Write</permission>
@@ -38,7 +69,7 @@
 				<param name="successMessage">Write metadata ok</param>
 				<param name="failureMessage">Write metadata error</param>
 			</action>
-			
+
 		</actions>
 
 		<actionGroups>
@@ -201,7 +232,8 @@
 								quantity, Quantity, number;
 								price, Price, currency;
 								paid, Was paid,
-								radio, ["Yes", "No"];
+								radio,
+								["Yes", "No"];
 								features, Features, checkbox, ["JPEG", "MPEG", "MOV"];
 								color, Color, dropdown, ["Black", "White", "Blue"];
 								date, Date,

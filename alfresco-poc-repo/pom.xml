@@ -17,6 +17,7 @@
 
 	<properties>
 		<alfresco.client.war>alfresco</alfresco.client.war>
+		<module.log.level>debug</module.log.level>
 	</properties>
 
 	<dependencies>

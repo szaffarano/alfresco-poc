@@ -2,12 +2,14 @@
 
 <beans>
 	<!-- Add Someco messages -->
-	<bean id="${project.artifactId}_resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+	<bean id="${project.artifactId}_resources"
+		class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
 		<property name="resourceBundles">
 			<list>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoActions</value>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoModel</value>
 				<value>alfresco.module.${project.artifactId}.messages.tecnoRatingsModel</value>
+				<value>alfresco.module.${project.artifactId}.messages.tecnoWorkflows</value>
 			</list>
 		</property>
 	</bean>
