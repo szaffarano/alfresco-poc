@@ -1,9 +1,8 @@
 package afip.tecno.alfresco.action;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import afip.tecno.alfresco.writer.Formulario1900;
 import afip.tecno.alfresco.writer.FormularioField;
 
+import com.sun.star.uno.RuntimeException;
+
 public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 	public static final String NAME = "write-meta-data";
 	public static final String PARAM_DESTINATION_FOLDER = "destination-folder";
@@ -43,71 +44,61 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 
 	public void init() {
 		logger.info("initializing WriteMetaDataActionExecuter...");
-		// TODO: some initialization
 	}
 
 	@Override
 	protected void addParameterDefinitions(List<ParameterDefinition> paramList) {
-		logger.error("addParameterDefinitions");
-		// TODO: set parameters
+		logger.info("addParameterDefinitions");
 	}
 
 	@Override
 	protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
-		logger.error("Ejecutando acción de write-meta-data");
+		logger.info("Ejecutando acción de write-meta-data");
 
 		Map<QName, Serializable> properties = nodeService.getProperties(actionedUponNodeRef);
 		for (Map.Entry<QName, Serializable> entry : properties.entrySet()) {
 			if (entry.getKey() != null && entry.getValue() != null) {
-				logger.error("Property [" + entry.getKey().toString() + ", " + entry.getValue().toString() + "]");
+				logger.info("Property [" + entry.getKey().toString() + ", " + entry.getValue().toString() + "]");
 			}
 		}
 
-		// Crear el pdf con los metadatos y grabarlo.
-		writeMetaData(properties);
+		action.setParameterValue(PARAM_RESULT, writeMetaData(properties));
 	}
 
 	public void setNodeService(NodeService nodeService) {
 		this.nodeService = nodeService;
 	}
 
-	private void writeMetaData(Map<QName, Serializable> properties) {
+	private byte[] writeMetaData(Map<QName, Serializable> properties) {
+		InputStream is = null;
 		try {
-			logger.error("FOP ExampleObj2PDF\n");
-			logger.error("Preparing...");
-
-			File pdffile = new File(System.getProperty("java.io.tmpdir"), "Formulario1900.pdf");
-
-			InputStream is = null;
-			try {
-				is = Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream("f19002fo.xsl");
-				logger.info("Levantando xsl de resource: " + is);
-				convertFormulario19002PDF(createSampleFormulario1900(properties), is, pdffile);
-			} finally {
-				if (is != null) {
+			is = Thread.currentThread().getContextClassLoader().getResourceAsStream("f19002fo.xsl");
+			logger.info("Levantando xsl de resource: " + is);
+			return convertFormulario19002PDF(createSampleFormulario1900(properties), is);
+		} catch (Exception e) {
+			throw new RuntimeException("Error generando PDF", e);
+		} finally {
+			if (is != null) {
+				try {
 					is.close();
+				} catch (IOException e) {
 				}
 			}
-			logger.error("Success!");
-		} catch (Exception e) {
-			logger.error(e.toString(), e);
-
 		}
 	}
 
-	public void convertFormulario19002PDF(Formulario1900 formulario1900, InputStream xslt, File pdf)
-			throws IOException, FOPException, TransformerException {
+	public byte[] convertFormulario19002PDF(Formulario1900 formulario1900, InputStream xslt) throws IOException,
+			FOPException, TransformerException {
 
 		FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
-		// configure foUserAgent as desired
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		// Setup output
-		OutputStream out = new java.io.FileOutputStream(pdf);
-		out = new java.io.BufferedOutputStream(out);
+		// OutputStream out = new java.io.FileOutputStream(pdf);
+		// out = new java.io.BufferedOutputStream(out);
 		try {
 			// Construct fop with desired output format
-			Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+			Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, baos);
 
 			// Setup XSLT
 			TransformerFactory factory = TransformerFactory.newInstance();
@@ -122,8 +113,11 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 
 			// Start XSLT transformation and FOP processing
 			transformer.transform(src, res);
+			return baos.toByteArray();
 		} finally {
-			out.close();
+			if (baos != null) {
+				baos.close();
+			}
 		}
 	}
 
@@ -133,7 +127,7 @@ public class WriteMetaDataActionExecuter extends ActionExecuterAbstractBase {
 
 		for (Map.Entry<QName, Serializable> entry : properties.entrySet()) {
 			if (entry.getKey() != null && entry.getValue() != null) {
-				// logger.error("Property [" + entry.getKey().toString() + ", "
+				// logger.info("Property [" + entry.getKey().toString() + ", "
 				// + entry.getValue().toString() + "]");
 				formulario1900.addField(new FormularioField(entry.getKey().toString(), entry.getValue().toString()));
 			}
