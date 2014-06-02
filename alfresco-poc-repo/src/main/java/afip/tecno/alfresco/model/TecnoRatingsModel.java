@@ -2,7 +2,7 @@ package afip.tecno.alfresco.model;
 
 public class TecnoRatingsModel {
 	// Namespaces
-	public static final String NAMESPACE_TECNO_RATINGS_CONTENT_MODEL = "http://www.afip.gob.ar/model/ratings/1.0";
+	public static final String NAMESPACE_TECNO_RATINGS_CONTENT_MODEL = "http://tecno.afip.gob.ar/model/ratings/1.0";
 
 	// Types
 	public static final String TYPE_SCR_RATING = "rating";

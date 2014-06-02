@@ -2,7 +2,7 @@ package afip.tecno.alfresco.model;
 
 public class TecnoModel {
 	// Types
-	public static final String NAMESPACE_TECNO_CONTENT_MODEL = "http://www.afip.gob.ar/model/content/1.0";
+	public static final String NAMESPACE_TECNO_CONTENT_MODEL = "http://tecno.afip.gob.ar/model/content/1.0";
 
 	public static final String TYPE_TECNO_FORM = "form1900";
 

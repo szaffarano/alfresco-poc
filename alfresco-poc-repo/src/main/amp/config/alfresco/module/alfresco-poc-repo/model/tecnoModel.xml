@@ -13,12 +13,13 @@
 	</imports>
 
 	<namespaces>
-		<namespace uri="http://www.afip.gob.ar/model/content/1.0" prefix="tecno" />
-		<namespace uri="http://www.afip.gob.ar/model/ratings/1.0" prefix="scr" />
+		<namespace uri="http://tecno.afip.gob.ar/model/content/1.0" prefix="tecno" />
+		<namespace uri="http://tecno.afip.gob.ar/model/ratings/1.0" prefix="scr" />
 	</namespaces>
 
 	<constraints>
-		<constraint name="tecno:direcciones" type="afip.tecno.alfresco.constraint.DireccionesConstraint">
+		<constraint name="tecno:direcciones"
+			type="afip.tecno.alfresco.constraint.DireccionesConstraint">
 			<parameter name="allowedValues">
 				<list></list>
 			</parameter>
@@ -30,52 +31,6 @@
 			<title>Formulario Conformidad</title>
 			<description>Formulario de Conformidad de Servicios</description>
 			<parent>cm:content</parent>
-			<properties>
-				<property name="tecno:areaResponsable">
-					<title>Area Responsable</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:direccion">
-					<title>Dirección a la cual reporta</title>
-					<type>d:text</type>
-					<multiple>true</multiple>
-					<constraints>
-						<constraint ref="tecno:direcciones" />
-					</constraints>
-				</property>
-				<property name="tecno:domicilio">
-					<title>Domicilio de la prestación</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:expediente">
-					<title>Número de expediente</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:ordenCompra">
-					<title>Orden de compra</title>
-					<type>d:long</type>
-				</property>
-				<property name="tecno:fechaInicio">
-					<title>Fecha de inicio</title>
-					<type>d:date</type>
-				</property>
-				<property name="tecno:fechaVencimiento">
-					<title>Fecha de vencimiento</title>
-					<type>d:date</type>
-				</property>
-				<property name="tecno:objetoServicio">
-					<title>Objeto o Servicio contratado</title>
-					<type>d:mltext</type>
-				</property>
-				<property name="tecno:items">
-					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
-					<type>d:text</type>
-				</property>
-				<property name="tecno:enabled">
-					<title>Activo</title>
-					<type>d:boolean</type>
-				</property>
-			</properties>
 			<associations>
 				<association name="tecno:adjuntos">
 					<title>Archivos adjuntos</title>
@@ -91,6 +46,9 @@
 					</target>
 				</association>
 			</associations>
+			<mandatory-aspects>
+				<aspect>tecno:form1900Data</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="scr:rating">
@@ -124,6 +82,65 @@
 				<property name="tecno:importe">
 					<title>Importe</title>
 					<type>d:double</type>
+				</property>
+			</properties>
+		</aspect>
+
+		<aspect name="tecno:form1900Data">
+			<title>Formulario 1900</title>
+			<properties>
+				<property name="tecno:areaResponsable">
+					<title>Area Responsable</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:direccion">
+					<title>Dirección a la cual reporta</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<multiple>true</multiple>
+					<constraints>
+						<constraint ref="tecno:direcciones" />
+					</constraints>
+				</property>
+				<property name="tecno:domicilio">
+					<title>Domicilio de la prestación</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:expediente">
+					<title>Número de expediente</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:ordenCompra">
+					<title>Orden de compra</title>
+					<type>d:long</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:fechaInicio">
+					<title>Fecha de inicio</title>
+					<type>d:date</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:fechaVencimiento">
+					<title>Fecha de vencimiento</title>
+					<type>d:date</type>
+				</property>
+				<property name="tecno:objetoServicio">
+					<title>Objeto o Servicio contratado</title>
+					<type>d:mltext</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:items">
+					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+				</property>
+				<property name="tecno:enabled">
+					<title>Activo</title>
+					<type>d:boolean</type>
+					<default>true</default>
 				</property>
 			</properties>
 		</aspect>

@@ -6,22 +6,139 @@
 					<show id="bpm:workflowDescription" />
 					<show id="packageItems" />
 					<show id="transitions" />
-					<show id="bpm:status" />
-					<show id="tecnowf:nombre" />
 				</field-visibility>
 				<appearance>
 					<set id="" appearance="title" label-id="workflow.set.general" />
 					<set id="items" appearance="title" label-id="workflow.set.items" />
-					<set id="progress" appearance="title" label-id="workflow.set.task.progress" />
-					<set id="other" appearance="title" label-id="workflow.set.other" />
+
 					<field id="bpm:workflowDescription" label-id="workflow.field.message">
 						<control template="/org/alfresco/components/form/controls/textarea.ftl">
 							<control-param name="style">width: 95%</control-param>
 						</control>
 					</field>
 					<field id="packageItems" set="items" />
-					<field id="tecnowf:nombre" set="other" label-id="prop.tecnowf_nombre" />
-					<field id="bpm:status" set="progress" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<config evaluator="task-type" condition="tecnowf:form1900">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="bpm:workflowDescription" />
+
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:adjuntos" />
+					<show id="tecno:items" />
+
+					<show id="packageItems" />
+					<show id="transitions" />
+				</field-visibility>
+				<appearance>
+					<set id="" appearance="title" label-id="workflow.set.general" />
+					<set id="items" appearance="title" label-id="workflow.set.items" />
+					<set id="response" appearance="title" label-id="workflow.set.response" />
+
+					<field id="bpm:workflowDescription" label-id="workflow.field.message">
+						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+							<control-param name="style">width: 95%</control-param>
+						</control>
+					</field>
+
+					<field id="tecno:areaResponsable" label-id="prop.tecno_areaResponsable" />
+					<field id="tecno:direccion" label-id="prop.tecno_direccion" />
+					<field id="tecno:domicilio" label-id="prop.tecno_domicilio" />
+					<field id="tecno:expediente" label-id="prop.tecno_expediente" />
+					<field id="tecno:ordenCompra" label-id="prop.tecno_ordenCompra" />
+					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
+					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
+					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
+					<field id="tecno:adjuntos" label-id="prop.tecno_adjuntos" />
+					<field id="tecno:items" label-id="prop.tecno_items">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config"><![CDATA[
+								nroRenglon, N° Renglon, number; 
+								item, Item, number;
+								cantServiciosOC, Cant Servicios O/C, number;
+								nroServicioTotOC, N° Servicio del total de la O/C, number;
+								cantidad, Cantidad , number;
+								precioUnitario, Precio Unitario, currency;
+								precioTotal, Precio Total, currency; 
+								observaciones, Observaciones, text;
+								posicionSigma, Posición Sigma, text;
+							]]></control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
+					<field id="cm:sentdate" read-only="true" />
+					<field id="cm:subjectline" read-only="true" />
+					<field id="cm:replaces" label-id="assoc.cm_replaces" />
+
+					<field id="packageItems" set="items" />
+					<field id="transitions" set="response" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<config evaluator="task-type" condition="tecnowf:conformidadForm1900">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="tecnowf:conforme" />
+					<show id="transitions" />
+				</field-visibility>
+				<appearance>
+					<set id="response" appearance="title" label-id="workflow.set.response" />
+					<field id="tecnowf:conforme" set="response" />
+					<field id="transitions" set="response" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<config evaluator="task-type" condition="tecnowf:aprobacionForm1900">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="tecnowf:aprobado" />
+					<show id="transitions" />
+				</field-visibility>
+				<appearance>
+					<set id="response" appearance="title" label-id="workflow.set.response" />
+					<field id="tecnowf:aprobado" set="response" />
+					<field id="transitions" set="response" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
+
+	<config evaluator="task-type" condition="tecnowf:cuantificacionPenalidad">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="tecnowf:montoPenalidad" />
+					<show id="tecnowf:observaciones" />
+					<show id="transitions" />
+				</field-visibility>
+				<appearance>
+					<set id="" appearance="title" label-id="workflow.tecnowf_cuantificarPenalidad.title" />
+					<set id="response" appearance="title" label-id="workflow.set.response" />
+					<field id="tecnowf:montoPenalidad" label-id="workflow.tecnowf_cuantificarPenalidad.montoPenalidad" />
+					<field id="tecnowf:observaciones" label-id="workflow.tecnowf_cuantificarPenalidad.observaciones">
+						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+							<control-param name="style">width: 95%</control-param>
+						</control>
+					</field>
+					<field id="transitions" set="response" />
 				</appearance>
 			</form>
 		</forms>
@@ -164,15 +281,16 @@
 					<field id="tecno:items" label-id="prop.tecno_items">
 						<control template="/org/alfresco/form/controls/datatable-property.ftl">
 							<control-param name="config">
-								id, ID, number;
-								name, Item, text;
-								quantity, Quantity, number;
-								price, Price, currency;
-								paid, Was paid, radio,
-								["Yes", "No"];
-								features, Features, checkbox, ["JPEG", "MPEG", "MOV"];
-								color, Color, dropdown, ["Black", "White", "Blue"];
-								date, Date, date;
+								nroRenglon, Renglon N°, number;
+								item,
+								Item, number;
+								cantServiciosOC, Cantidad de Servicios de la O/C, number;
+								nroServicioTotOC, Numero de Servicio del total de la O/C, number;
+								cantidad, Cantidad , number;
+								precioUnitario, Precio Unitario, currency;
+								precioTotal, Precio Total, currency;
+								observaciones, Observaciones, text;
+								posicionSigma, Observaciones, text;
 							</control-param>
 							<control-param name="debug">false</control-param>
 						</control>

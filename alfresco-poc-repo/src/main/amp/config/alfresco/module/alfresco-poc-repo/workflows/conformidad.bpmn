@@ -6,74 +6,207 @@
 	expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://tecno.afip.gob.ar/conformidad">
 
 	<process id="conformidad" name="Proceso de Conformidad" isExecutable="true">
+
 		<startEvent id="start" name="Iniciar Conformidad" activiti:formKey="tecnowf:iniciarConformidadTask"></startEvent>
 
-		<sequenceFlow id="startToPasoUno" sourceRef="start" targetRef="pasoUno">
+		<sequenceFlow id="fStartToCompletarForm" sourceRef="start"
+			targetRef="tskCompletarFormulario">
 			<extensionElements>
 				<activiti:executionListener event="start"
 					class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
 					<activiti:field name="script">
-						<activiti:string>logger.log("Hola " + tecnowf_nombre);</activiti:string>
+						<activiti:string><![CDATA[
+							logger.log("Se inició proceso de conformidad.");
+						]]></activiti:string>
 					</activiti:field>
 				</activiti:executionListener>
 			</extensionElements>
 		</sequenceFlow>
 
-		<userTask id="pasoUno" name="Paso Uno" activiti:assignee="${initiator.properties.userName}"
-			activiti:formKey="wf:activitiReviewTask">
+		<userTask id="tskCompletarFormulario" name="Completar Formulario 1900"
+			activiti:candidateGroups="GROUP_LLENADORES" activiti:formKey="tecnowf:form1900">
 			<extensionElements>
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
-						<activiti:string>execution.setVariable("tecno_flag", task.getVariable("wf_reviewOutcome"));</activiti:string>
+						<activiti:string><![CDATA[
+							logger.log("Se completó el formulario 1900, yendo a controlar conformidad.");
+						]]></activiti:string>
 					</activiti:field>
 				</activiti:taskListener>
 			</extensionElements>
 		</userTask>
 
-		<sequenceFlow id="pasoUnoToScript" sourceRef="pasoUno"
-			targetRef="alfrescoScripttask1"></sequenceFlow>
+		<sequenceFlow id="fTskCompletarFormToTskControlarConformidad"
+			sourceRef="tskCompletarFormulario" targetRef="tskControlarConformidad"></sequenceFlow>
 
-		<serviceTask id="alfrescoScripttask1" name="Alfresco Script Task"
-			activiti:class="org.alfresco.repo.workflow.activiti.script.AlfrescoScriptDelegate">
+		<userTask id="tskControlarConformidad" name="Controlar Conformidad"
+			activiti:candidateGroups="GROUP_CONTROLADORES" activiti:formKey="tecnowf:conformidadForm1900">
 			<extensionElements>
-				<activiti:field name="script">
-					<activiti:string>logger.log("Valor de la property seteada antes: " + tecno_flag);</activiti:string>
-				</activiti:field>
+				<activiti:taskListener event="complete"
+					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+					<activiti:field name="script">
+						<activiti:string><![CDATA[
+							var conforme = task.getVariableLocal('tecnowf_conforme');
+							logger.log("Se controló el formulario 1900, conforme: " + conforme);
+							execution.setVariable('tecnowf_conforme', (conforme == 'Conforme'));
+						]]></activiti:string>
+					</activiti:field>
+				</activiti:taskListener>
 			</extensionElements>
-		</serviceTask>
+		</userTask>
 
-		<sequenceFlow id="scriptToEnd" sourceRef="alfrescoScripttask1"
-			targetRef="end"></sequenceFlow>
+		<sequenceFlow id="fTskControlarConformidadToEgConforme"
+			sourceRef="tskControlarConformidad" targetRef="egConforme"></sequenceFlow>
+
+		<exclusiveGateway id="egConforme" name="Exclusive Gateway"></exclusiveGateway>
+
+		<sequenceFlow id="fEgConformeToTskAprobar" name="¿conforme?"
+			sourceRef="egConforme" targetRef="tskAprobarServicio">
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${tecnowf_conforme}]]></conditionExpression>
+		</sequenceFlow>
+		<sequenceFlow id="fEgConformeToTskCuantificar" name="no conforme"
+			sourceRef="egConforme" targetRef="tskCuantificarPenalidad">
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${!tecnowf_conforme}]]></conditionExpression>
+		</sequenceFlow>
+
+		<userTask id="tskAprobarServicio" name="Aprobar Servicio"
+			activiti:candidateGroups="GROUP_APROBADORES" activiti:formKey="tecnowf:aprobacionForm1900">
+			<extensionElements>
+				<activiti:taskListener event="complete"
+					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+					<activiti:field name="script">
+						<activiti:string><![CDATA[
+							var aprobado = task.getVariableLocal('tecnowf_aprobado');
+							logger.log("Se ejecutó tarea de aprobación de servicio, aprobado: " + aprobado);
+							execution.setVariable('tecnowf_aprobado', (aprobado == 'Aprobar'));
+						]]></activiti:string>
+					</activiti:field>
+				</activiti:taskListener>
+			</extensionElements>
+		</userTask>
+
+		<sequenceFlow id="tskAprobarServicioToEgAprueba" sourceRef="tskAprobarServicio"
+			targetRef="egAprueba"></sequenceFlow>
+
+		<exclusiveGateway id="egAprueba" name="Exclusive Gateway"></exclusiveGateway>
+
+		<sequenceFlow id="egApruebaToEnd" name="aprobado" sourceRef="egAprueba"
+			targetRef="end">
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${tecnowf_aprobado}]]></conditionExpression>
+		</sequenceFlow>
+		<sequenceFlow id="egApruebaToTskCompletarFormulario" name="no aprobado"
+			sourceRef="egAprueba" targetRef="tskCompletarFormulario">
+			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${!tecnowf_aprobado}]]></conditionExpression>
+		</sequenceFlow>
+
+		<userTask id="tskCuantificarPenalidad" name="Cuantificar Penalidad"
+			activiti:candidateGroups="GROUP_AUDITORES" activiti:formKey="tecnowf:cuantificacionPenalidad">
+			<extensionElements>
+				<activiti:taskListener event="complete"
+					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
+					<activiti:field name="script">
+						<activiti:string><![CDATA[
+							logger.log("Se cuantificó la penalidad del formulario 1900, valor: " + task.getVariableLocal('tecnowf_penalidad'));
+							execution.setVariable('tecnowf_penalidad', task.getVariableLocal('tecnowf_penalidad'));
+						]]></activiti:string>
+					</activiti:field>
+				</activiti:taskListener>
+			</extensionElements>
+		</userTask>
+
+		<sequenceFlow id="tskCuantificarPenalidadToTskAprobarServicio"
+			sourceRef="tskCuantificarPenalidad" targetRef="tskAprobarServicio"></sequenceFlow>
 
 		<endEvent id="end" name="Fin de proceso de conformidad"></endEvent>
 	</process>
+
 	<bpmndi:BPMNDiagram id="BPMNDiagram_conformidad">
 		<bpmndi:BPMNPlane bpmnElement="conformidad" id="BPMNPlane_conformidad">
 			<bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
-				<omgdc:Bounds height="35.0" width="35.0" x="170.0" y="240.0"></omgdc:Bounds>
+				<omgdc:Bounds height="35.0" width="35.0" x="20.0" y="90.0"></omgdc:Bounds>
 			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape bpmnElement="pasoUno" id="BPMNShape_pasoUno">
-				<omgdc:Bounds height="55.0" width="105.0" x="240.0" y="230.0"></omgdc:Bounds>
+			<bpmndi:BPMNShape bpmnElement="tskCompletarFormulario"
+				id="BPMNShape_tskCompletarFormulario">
+				<omgdc:Bounds height="55.0" width="105.0" x="90.0" y="80.0"></omgdc:Bounds>
 			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape bpmnElement="alfrescoScripttask1"
-				id="BPMNShape_alfrescoScripttask1">
-				<omgdc:Bounds height="55.0" width="105.0" x="390.0" y="230.0"></omgdc:Bounds>
+			<bpmndi:BPMNShape bpmnElement="tskControlarConformidad"
+				id="BPMNShape_tskControlarConformidad">
+				<omgdc:Bounds height="55.0" width="105.0" x="230.0" y="80.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="egConforme" id="BPMNShape_egConforme">
+				<omgdc:Bounds height="40.0" width="40.0" x="360.0" y="87.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="tskAprobarServicio" id="BPMNShape_tskAprobarServicio">
+				<omgdc:Bounds height="55.0" width="105.0" x="480.0" y="80.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="egAprueba" id="BPMNShape_egAprueba">
+				<omgdc:Bounds height="40.0" width="40.0" x="617.0" y="87.0"></omgdc:Bounds>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="tskCuantificarPenalidad"
+				id="BPMNShape_tskCuantificarPenalidad">
+				<omgdc:Bounds height="55.0" width="105.0" x="328.0" y="160.0"></omgdc:Bounds>
 			</bpmndi:BPMNShape>
 			<bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
-				<omgdc:Bounds height="35.0" width="35.0" x="540.0" y="240.0"></omgdc:Bounds>
+				<omgdc:Bounds height="35.0" width="35.0" x="710.0" y="90.0"></omgdc:Bounds>
 			</bpmndi:BPMNShape>
-			<bpmndi:BPMNEdge bpmnElement="startToPasoUno" id="BPMNEdge_startToPasoUno">
-				<omgdi:waypoint x="205.0" y="257.0"></omgdi:waypoint>
-				<omgdi:waypoint x="240.0" y="257.0"></omgdi:waypoint>
+			<bpmndi:BPMNEdge bpmnElement="fStartToCompletarForm" id="BPMNEdge_fStartToCompletarForm">
+				<omgdi:waypoint x="55.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="90.0" y="107.0"></omgdi:waypoint>
 			</bpmndi:BPMNEdge>
-			<bpmndi:BPMNEdge bpmnElement="pasoUnoToScript" id="BPMNEdge_pasoUnoToScript">
-				<omgdi:waypoint x="345.0" y="257.0"></omgdi:waypoint>
-				<omgdi:waypoint x="390.0" y="257.0"></omgdi:waypoint>
+			<bpmndi:BPMNEdge bpmnElement="fTskCompletarFormToTskControlarConformidad"
+				id="BPMNEdge_fTskCompletarFormToTskControlarConformidad">
+				<omgdi:waypoint x="195.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="230.0" y="107.0"></omgdi:waypoint>
 			</bpmndi:BPMNEdge>
-			<bpmndi:BPMNEdge bpmnElement="scriptToEnd" id="BPMNEdge_scriptToEnd">
-				<omgdi:waypoint x="495.0" y="257.0"></omgdi:waypoint>
-				<omgdi:waypoint x="540.0" y="257.0"></omgdi:waypoint>
+			<bpmndi:BPMNEdge bpmnElement="fTskControlarConformidadToEgConforme"
+				id="BPMNEdge_fTskControlarConformidadToEgConforme">
+				<omgdi:waypoint x="335.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="360.0" y="107.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="fEgConformeToTskAprobar"
+				id="BPMNEdge_fEgConformeToTskAprobar">
+				<omgdi:waypoint x="400.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="480.0" y="107.0"></omgdi:waypoint>
+				<bpmndi:BPMNLabel>
+					<omgdc:Bounds height="12.0" width="100.0" x="409.0" y="90.0"></omgdc:Bounds>
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="tskAprobarServicioToEgAprueba"
+				id="BPMNEdge_tskAprobarServicioToEgAprueba">
+				<omgdi:waypoint x="585.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="617.0" y="107.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="egApruebaToEnd" id="BPMNEdge_egApruebaToEnd">
+				<omgdi:waypoint x="657.0" y="107.0"></omgdi:waypoint>
+				<omgdi:waypoint x="710.0" y="107.0"></omgdi:waypoint>
+				<bpmndi:BPMNLabel>
+					<omgdc:Bounds height="12.0" width="46.0" x="656.0" y="90.0"></omgdc:Bounds>
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="tskCuantificarPenalidadToTskAprobarServicio"
+				id="BPMNEdge_tskCuantificarPenalidadToTskAprobarServicio">
+				<omgdi:waypoint x="433.0" y="187.0"></omgdi:waypoint>
+				<omgdi:waypoint x="532.0" y="187.0"></omgdi:waypoint>
+				<omgdi:waypoint x="532.0" y="135.0"></omgdi:waypoint>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="fEgConformeToTskCuantificar"
+				id="BPMNEdge_fEgConformeToTskCuantificar">
+				<omgdi:waypoint x="380.0" y="127.0"></omgdi:waypoint>
+				<omgdi:waypoint x="380.0" y="160.0"></omgdi:waypoint>
+				<bpmndi:BPMNLabel>
+					<omgdc:Bounds height="12.0" width="100.0" x="390.0" y="127.0"></omgdc:Bounds>
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="egApruebaToTskCompletarFormulario"
+				id="BPMNEdge_egApruebaToTskCompletarFormulario">
+				<omgdi:waypoint x="637.0" y="127.0"></omgdi:waypoint>
+				<omgdi:waypoint x="636.0" y="234.0"></omgdi:waypoint>
+				<omgdi:waypoint x="142.0" y="234.0"></omgdi:waypoint>
+				<omgdi:waypoint x="142.0" y="135.0"></omgdi:waypoint>
+				<bpmndi:BPMNLabel>
+					<omgdc:Bounds height="12.0" width="100.0" x="641.0" y="174.0"></omgdc:Bounds>
+				</bpmndi:BPMNLabel>
 			</bpmndi:BPMNEdge>
 		</bpmndi:BPMNPlane>
 	</bpmndi:BPMNDiagram>

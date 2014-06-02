@@ -9,6 +9,7 @@
 	<imports>
 		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
 		<import uri="http://www.alfresco.org/model/bpm/1.0" prefix="bpm" />
+		<import uri="http://tecno.afip.gob.ar/model/content/1.0" prefix="tecno" />
 	</imports>
 
 	<namespaces>
@@ -18,13 +19,86 @@
 	<types>
 		<type name="tecnowf:iniciarConformidadTask">
 			<parent>bpm:startTask</parent>
+		</type>
+
+		<type name="tecnowf:form1900">
+			<parent>bpm:workflowTask</parent>
+			<mandatory-aspects>
+				<aspect>tecno:form1900Data</aspect>
+			</mandatory-aspects>
+		</type>
+
+		<type name="tecnowf:conformidadForm1900">
+			<parent>bpm:activitiOutcomeTask</parent>
 			<properties>
-				<property name="tecnowf:nombre">
+				<property name="tecnowf:conforme">
 					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<multiple>false</multiple>
+					<default>Conforme</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Conforme</value>
+									<value>Controlar Conformidad</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
 				</property>
 			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>{http://tecno.afip.gob.ar/model/workflow/1.0}conforme</default>
+				</property>
+			</overrides>
+		</type>
+
+		<type name="tecnowf:cuantificacionPenalidad">
+			<parent>bpm:workflowTask</parent>
+			<properties>
+				<property name="tecnowf:montoPenalidad">
+					<type>d:double</type>
+				</property>
+				<property name="tecnowf:observaciones">
+					<type>d:mltext</type>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+			</overrides>
+		</type>
+
+		<type name="tecnowf:aprobacionForm1900">
+			<parent>bpm:activitiOutcomeTask</parent>
+			<properties>
+				<property name="tecnowf:aprobado">
+					<type>d:text</type>
+					<default>Aprobar</default>
+					<constraints>
+						<constraint type="LIST">
+							<parameter name="allowedValues">
+								<list>
+									<value>Aprobar</value>
+									<value>Revisar</value>
+								</list>
+							</parameter>
+						</constraint>
+					</constraints>
+				</property>
+			</properties>
+			<overrides>
+				<property name="bpm:packageItemActionGroup">
+					<default>read_package_item_actions</default>
+				</property>
+				<property name="bpm:outcomePropertyName">
+					<default>{http://tecno.afip.gob.ar/model/workflow/1.0}aprobado</default>
+				</property>
+			</overrides>
 		</type>
 	</types>
 
