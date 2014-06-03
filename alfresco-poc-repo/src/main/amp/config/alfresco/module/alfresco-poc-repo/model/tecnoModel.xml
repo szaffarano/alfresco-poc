@@ -129,7 +129,7 @@
 				</property>
 				<property name="tecno:objetoServicio">
 					<title>Objeto o Servicio contratado</title>
-					<type>d:mltext</type>
+					<type>d:text</type>
 					<mandatory>true</mandatory>
 				</property>
 				<property name="tecno:items">

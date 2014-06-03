@@ -63,7 +63,7 @@
 					<type>d:double</type>
 				</property>
 				<property name="tecnowf:observaciones">
-					<type>d:mltext</type>
+					<type>d:text</type>
 				</property>
 			</properties>
 			<overrides>
