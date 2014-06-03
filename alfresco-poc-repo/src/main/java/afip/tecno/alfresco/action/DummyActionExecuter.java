@@ -43,7 +43,7 @@ public class DummyActionExecuter extends ActionExecuterAbstractBase {
 			enabled = Boolean.TRUE;
 
 		Map<QName, Serializable> properties = nodeService.getProperties(actionedUponNodeRef);
-		properties.put(QName.createQName(TecnoModel.NAMESPACE_TECNO_CONTENT_MODEL, TecnoModel.PROP_ENABLED), enabled);
+		properties.put(TecnoModel.PROP_ENABLED, enabled);
 
 		nodeService.setProperties(actionedUponNodeRef, properties);
 	}

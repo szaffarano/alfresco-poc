@@ -26,9 +26,14 @@
 			<artifactId>alfresco-repository</artifactId>
 		</dependency>
 		<dependency>
-		  <groupId>batik</groupId>
-		  <artifactId>batik</artifactId>
-		  <version>1.5</version>
+			<groupId>${alfresco.groupId}</groupId>
+			<artifactId>alfresco-remote-api</artifactId>
+			<version>${alfresco.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik</artifactId>
+			<version>1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
@@ -39,18 +44,18 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
-  		</dependency>
+		</dependency>
 		<dependency>
 			<groupId>xalan</groupId>
 			<artifactId>xalan</artifactId>
 			<version>2.7.0</version>
 		</dependency>
-  		<dependency>
+		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>fop</artifactId>
 			<version>0.94</version>
@@ -87,8 +92,8 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It 
+					has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

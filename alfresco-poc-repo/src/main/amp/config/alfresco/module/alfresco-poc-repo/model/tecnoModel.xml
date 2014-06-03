@@ -31,8 +31,15 @@
 			<title>Formulario Conformidad</title>
 			<description>Formulario de Conformidad de Servicios</description>
 			<parent>cm:content</parent>
+			<properties>
+				<property name="tecno:workflowFinished">
+					<title>Finalizado</title>
+					<type>d:boolean</type>
+					<mandatory>true</mandatory>
+				</property>
+			</properties>
 			<associations>
-				<association name="tecno:adjuntos">
+				<child-association name="tecno:adjuntos">
 					<title>Archivos adjuntos</title>
 					<description>Archivos adjuntos</description>
 					<source>
@@ -42,9 +49,9 @@
 					<target>
 						<class>cm:content</class>
 						<mandatory>false</mandatory>
-						<many>false</many>
+						<many>true</many>
 					</target>
-				</association>
+				</child-association>
 			</associations>
 			<mandatory-aspects>
 				<aspect>tecno:form1900Data</aspect>

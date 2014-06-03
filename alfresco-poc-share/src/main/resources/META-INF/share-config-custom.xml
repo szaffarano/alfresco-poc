@@ -144,63 +144,29 @@
 		</forms>
 	</config>
 
+	<config evaluator="string-compare" condition="DocLibCustom">
+		<dependencies>
+			<js src="/components/tecno/actions/actions-custom.js" />
+		</dependencies>
+	</config>
+
 	<!-- Actions -->
 	<config evaluator="string-compare" condition="DocLibActions">
 		<actions>
-			<action id="tecno-web-site" type="link" label="actions.tecno.web-site"
-				icon="tecno-website">
-				<param name="href">http://redmine.afip.gob.ar</param>
-				<param name="target">_blank</param>
+			<action id="comprobante" type="javascript" label="actions.tecno.comprobante">
+				<param name="function">onWSCaller</param>
+				<param name="webscript">tecno/conformidad/comprobante?nodeRef={nodeRef}</param>
+				<evaluator>tecno.evaluator.doclib.action.isForm1900</evaluator>
+				<evaluator>tecno.evaluator.doclib.action.worflowFinished</evaluator>
 			</action>
-			<action id="tecno-dummy-enable" type="javascript" label="actions.tecno.dummy-enable"
-				icon="tecno-enable">
-				<param name="function">onActionSimpleRepoAction</param>
-				<permissions>
-					<permission allow="true">Write</permission>
-				</permissions>
-				<param name="action">dummy-enable</param>
-				<param name="successMessage">message.dummy.enabled</param>
-				<param name="failureMessage">message.dummy.failure</param>
-				<evaluator negate="true">tecno.evaluator.doclib.action.isDummyEnabled
-				</evaluator>
-			</action>
-			<action id="tecno-dummy-disable" type="javascript" label="actions.tecno.dummy-disable"
-				icon="tecno-disable">
-				<param name="function">onActionSimpleRepoAction</param>
-				<permissions>
-					<permission allow="true">Write</permission>
-				</permissions>
-				<param name="action">dummy-disable</param>
-				<param name="successMessage">message.dummy.enabled</param>
-				<param name="failureMessage">message.dummy.failure</param>
-				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
-			</action>
-
-			<action id="tecno-write-meta-data" type="javascript" label="Write Meta Data"
-				icon="tecno-website">
-				<param name="function">onActionSimpleRepoAction</param>
-				<permissions>
-					<permission allow="true">Write</permission>
-				</permissions>
-				<param name="action">write-meta-data</param>
-				<param name="successMessage">Write metadata ok</param>
-				<param name="failureMessage">Write metadata error</param>
-			</action>
-
 		</actions>
 
 		<actionGroups>
 			<actionGroup id="document-browse">
-				<action index="500" id="tecno-web-site" />
-				<action index="510" id="tecno-dummy-enable" />
-				<action index="520" id="tecno-dummy-disable" />
-				<action index="530" id="tecno-write-meta-data" />
+				<action index="530" id="comprobante" />
 			</actionGroup>
 			<actionGroup id="document-details">
-				<action index="500" id="tecno-web-site" />
-				<action index="510" id="tecno-dummy-enable" />
-				<action index="520" id="tecno-dummy-disable" />
-				<action index="530" id="tecno-write-meta-data" />
+				<action index="530" id="comprobante" />
 			</actionGroup>
 		</actionGroups>
 	</config>
@@ -210,9 +176,6 @@
 		<aspects>
 			<!-- Aspects that a user can see -->
 			<visible>
-				<aspect name="tecno:incumplido" />
-				<aspect name="cm:replaceable" />
-				<aspect name="scr:rateable" />
 			</visible>
 
 			<!-- Aspects that a user can add. Same as "visible" if left empty -->
@@ -232,8 +195,8 @@
 		</types>
 
 		<indicators>
-			<indicator id="tecno-website" index="10">
-				<evaluator>tecno.evaluator.doclib.action.isDummyEnabled</evaluator>
+			<indicator id="comprobante" index="10">
+				<evaluator>tecno.evaluator.doclib.action.worflowFinished</evaluator>
 			</indicator>
 		</indicators>
 	</config>

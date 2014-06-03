@@ -28,7 +28,10 @@
 		<userTask id="tskCompletarFormulario" name="Completar Formulario 1900"
 			activiti:candidateGroups="GROUP_LLENADORES" activiti:formKey="tecnowf:form1900">
 			<extensionElements>
-				<activiti:taskListener event="complete" class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener"/>
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="create"
+					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
@@ -46,6 +49,10 @@
 		<userTask id="tskControlarConformidad" name="Controlar Conformidad"
 			activiti:candidateGroups="GROUP_CONTROLADORES" activiti:formKey="tecnowf:conformidadForm1900">
 			<extensionElements>
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="create"
+					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
@@ -77,6 +84,10 @@
 			activiti:candidateGroups="GROUP_APROBADORES" activiti:formKey="tecnowf:aprobacionForm1900">
 			<extensionElements>
 				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="create"
+					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
+				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
 						<activiti:string><![CDATA[
@@ -96,6 +107,18 @@
 
 		<sequenceFlow id="egApruebaToEnd" name="aprobado" sourceRef="egAprueba"
 			targetRef="end">
+			<extensionElements>
+				<activiti:executionListener event="start"
+					class="afip.tecno.alfresco.workflow.listeners.FinalizarProcesoListener" />
+				<activiti:executionListener event="start"
+					class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
+					<activiti:field name="script">
+						<activiti:string><![CDATA[
+							logger.log("Finalizó el proceso de conformidad.");
+						]]></activiti:string>
+					</activiti:field>
+				</activiti:executionListener>
+			</extensionElements>
 			<conditionExpression xsi:type="tFormalExpression"><![CDATA[${tecnowf_aprobado}]]></conditionExpression>
 		</sequenceFlow>
 		<sequenceFlow id="egApruebaToTskCompletarFormulario" name="no aprobado"
@@ -106,6 +129,10 @@
 		<userTask id="tskCuantificarPenalidad" name="Cuantificar Penalidad"
 			activiti:candidateGroups="GROUP_AUDITORES" activiti:formKey="tecnowf:cuantificacionPenalidad">
 			<extensionElements>
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="create"
+					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">

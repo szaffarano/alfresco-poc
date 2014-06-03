@@ -2,6 +2,13 @@
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 
 <beans>
+	<bean id="webscript.afip.tecno.conformidad.comprobante.get" class="afip.tecno.alfresco.webscript.Comprobante"
+		parent="webscript">
+		<property name="nodeService" ref="NodeService" />
+		<property name="actionService" ref="actionService" />
+		<property name="delegate" ref="webscript.content.streamer" />
+	</bean>
+
 	<bean id="${project.artifactId}_dictionaryBootstrap" parent="dictionaryModelBootstrap"
 		depends-on="dictionaryBootstrap">
 		<property name="models">
@@ -36,7 +43,19 @@
 			<ref bean="NodeService" />
 		</property>
 	</bean>
+	<bean id="dummydos" class="afip.tecno.alfresco.action.DummyActionExecuter"
+		parent="action-executer">
+		<property name="nodeService">
+			<ref bean="NodeService" />
+		</property>
+	</bean>
 
+	<bean id="dummyenable" class="afip.tecno.alfresco.action.DummyEnable"
+		parent="dummy">
+		<property name="publicAction">
+			<value>false</value>
+		</property>
+	</bean>
 	<bean id="dummy-enable" class="afip.tecno.alfresco.action.DummyEnable"
 		parent="dummy">
 		<property name="publicAction">
@@ -50,21 +69,62 @@
 		</property>
 	</bean>
 
-	<bean id="ratingBehavior" class="afip.tecno.alfresco.behavior.Rating"
-		init-method="init">
-		<property name="nodeService">
-			<ref bean="NodeService" />
+	<!-- <bean id="ratingBehavior" class="afip.tecno.alfresco.behavior.Rating" -->
+	<!-- init-method="init"> -->
+	<!-- <property name="nodeService"> -->
+	<!-- <ref bean="NodeService" /> -->
+	<!-- </property> -->
+	<!-- <property name="policyComponent"> -->
+	<!-- <ref bean="policyComponent" /> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+	<bean id="onCreateRatingNode" class="org.alfresco.repo.policy.registration.ClassPolicyRegistration"
+		parent="policyRegistration">
+		<property name="policyName">
+			<value>{http://www.alfresco.org}onCreateNode</value>
 		</property>
-		<property name="policyComponent">
-			<ref bean="policyComponent" />
+		<property name="className">
+			<value>{http://tecno.afip.gob.ar/model/ratings/1.0}rating</value>
+		</property>
+		<property name="behaviour">
+			<bean class="org.alfresco.repo.jscript.ScriptBehaviour" parent="scriptBehaviour">
+				<property name="location">
+					<bean class="org.alfresco.repo.jscript.ClasspathScriptLocation">
+						<constructor-arg>
+							<value>alfresco/module/${project.artifactId}/scripts/onCreateRating.js</value>
+						</constructor-arg>
+					</bean>
+				</property>
+			</bean>
 		</property>
 	</bean>
 
-	<bean id="write-meta-data" class="afip.tecno.alfresco.action.WriteMetaDataActionExecuter"
-		parent="action-executer" init-method="init">
-		<property name="nodeService">
-			<ref bean="NodeService" />
+	<bean id="onDeleteRatingNode" class="org.alfresco.repo.policy.registration.ClassPolicyRegistration"
+		parent="policyRegistration">
+		<property name="policyName">
+			<value>{http://www.alfresco.org}onDeleteNode</value>
 		</property>
+		<property name="className">
+			<value>{http://tecno.afip.gob.ar/model/ratings/1.0}rating</value>
+		</property>
+		<property name="behaviour">
+			<bean class="org.alfresco.repo.jscript.ScriptBehaviour" parent="scriptBehaviour">
+				<property name="location">
+					<bean class="org.alfresco.repo.jscript.ClasspathScriptLocation">
+						<constructor-arg>
+							<value>alfresco/module/${project.artifactId}/scripts/onDeleteRating.js</value>
+						</constructor-arg>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="comprobante-conformidad" class="afip.tecno.alfresco.action.ComprobanteConformidadAction"
+		parent="action-executer" init-method="init">
+		<property name="nodeService" ref="NodeService" />
+		<property name="dictionaryService" ref="DictionaryService" />
 	</bean>
 
 	<bean id="${project.artifactId}.workflowBootstrap" parent="workflowDeployer">

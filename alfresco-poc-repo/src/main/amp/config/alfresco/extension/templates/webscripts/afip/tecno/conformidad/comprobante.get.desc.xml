@@ -1,0 +1,10 @@
+<!-- <webscript kind="org.alfresco.repository.content.stream"> -->
+
+<webscript kind="afip.tecno.conformidad.comprobante.get">
+	<shortname>Comprobante del formulario de conformidad</shortname>
+	<description>Devuelve el comprobante de conformidad</description>
+	<url>/tecno/conformidad/comprobante</url>
+	<format default="">extension</format>
+	<authentication runas="admin">guest</authentication>
+	<transaction>none</transaction>
+</webscript>
