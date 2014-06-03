@@ -13,6 +13,8 @@
 			targetRef="tskCompletarFormulario">
 			<extensionElements>
 				<activiti:executionListener event="start"
+					class="afip.tecno.alfresco.workflow.listeners.VerificarTipoListener" />
+				<activiti:executionListener event="start"
 					class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
 					<activiti:field name="script">
 						<activiti:string><![CDATA[
@@ -26,6 +28,7 @@
 		<userTask id="tskCompletarFormulario" name="Completar Formulario 1900"
 			activiti:candidateGroups="GROUP_LLENADORES" activiti:formKey="tecnowf:form1900">
 			<extensionElements>
+				<activiti:taskListener event="complete" class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener"/>
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
