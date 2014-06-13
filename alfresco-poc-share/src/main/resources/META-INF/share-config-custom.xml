@@ -1,4 +1,21 @@
 <alfresco-config>
+	<config>
+		<forms>
+			<default-controls>
+				<type name="text" template="/afip/tecno/form/controls/textfield.ftl" />
+				<type name="textarea" template="/afip/tecno/form/controls/textarea.ftl" />
+				<type name="int" template="/afip/tecno/form/controls/number.ftl" />
+				<type name="float" template="/afip/tecno/form/controls/number.ftl" />
+				<type name="double" template="/afip/tecno/form/controls/number.ftl" />
+				<type name="long" template="/afip/tecno/form/controls/number.ftl" />
+				<type name="date" template="/afip/tecno/form/controls/date.ftl" />
+			</default-controls>
+			<dependencies>
+				<css src="/components/tecno/css/customform.css" />
+			</dependencies>
+		</forms>
+	</config>
+
 	<config evaluator="string-compare" condition="activiti$conformidad">
 		<forms>
 			<form>
@@ -8,11 +25,13 @@
 					<show id="transitions" />
 				</field-visibility>
 				<appearance>
-					<set id="" appearance="title" label-id="workflow.set.general" />
+					<set id="title" appearance="title" label-id="workflow.set.general" />
 					<set id="items" appearance="title" label-id="workflow.set.items" />
 
-					<field id="bpm:workflowDescription" label-id="workflow.field.message">
-						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+					<field id="transitions" label-id="transitions.label" set="title" />
+					<field id="bpm:workflowDescription" label-id="workflow.field.message"
+						set="title">
+						<control template="/afip/tecno/form/controls/textarea.ftl">
 							<control-param name="style">width: 95%</control-param>
 						</control>
 					</field>
@@ -26,64 +45,115 @@
 		<forms>
 			<form>
 				<field-visibility>
-					<show id="bpm:workflowDescription" />
-
 					<show id="tecno:areaResponsable" />
 					<show id="tecno:direccion" />
 					<show id="tecno:domicilio" />
+
 					<show id="tecno:expediente" />
 					<show id="tecno:ordenCompra" />
+
 					<show id="tecno:fechaInicio" />
 					<show id="tecno:fechaVencimiento" />
+
 					<show id="tecno:objetoServicio" />
-					<show id="tecno:adjuntos" />
+					<show id="tecno:tipoServicio" />
+					<show id="tecno:otroTipoServicio" />
+					<show id="tecno:periodicidad" />
+
+					<show id="tecno:periodoDesde" />
+					<show id="tecno:periodoHasta" />
+
+					<show id="tecno:proveedor" />
+					<show id="tecno:cuitProveedor" />
+
+					<show id="tecno:remitoNumero" />
+					<show id="tecno:facturaNumero" />
+
+					<show id="tecno:regimenContratacion" />
+
+					<show id="tecno:notaCredito" />
+					<show id="tecno:notaDebito" />
+
 					<show id="tecno:items" />
 
 					<show id="packageItems" />
 					<show id="transitions" />
 				</field-visibility>
 				<appearance>
-					<set id="" appearance="title" label-id="workflow.set.general" />
-					<set id="items" appearance="title" label-id="workflow.set.items" />
-					<set id="response" appearance="title" label-id="workflow.set.response" />
+					<set id="title" appearance="title" label-id="workflow.tecnowf_conformidad.form1900" />
+					<set id="body" appearance="whitespace" parent="title" />
 
-					<field id="bpm:workflowDescription" label-id="workflow.field.message">
-						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+					<set id="row1" appearance="whitespace" parent="body" />
+					<set id="row2" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="vigencia" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.vigencia"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row3" appearance="whitespace" parent="body" />
+					<set id="periodo" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.periodo"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row4" appearance="whitespace" parent="body" />
+					<set id="row5" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row6" appearance="whitespace" parent="body" />
+					<set id="row7" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row8" appearance="whitespace" parent="body" />
+
+					<field id="tecno:areaResponsable" set="row1" />
+					<field id="tecno:direccion" set="row1">
+						<control template="/afip/tecno/form/controls/selectone.ftl" />
+					</field>
+					<field id="tecno:domicilio" set="row1" />
+
+					<field id="tecno:expediente" set="row2">
+						<control>
+							<control-param name="styleClass">short-field</control-param>
+						</control>
+					</field>
+					<field id="tecno:ordenCompra" set="row2" />
+
+					<field id="tecno:fechaInicio" set="vigencia" />
+					<field id="tecno:fechaVencimiento" set="vigencia" />
+
+					<field id="tecno:objetoServicio" set="row3">
+						<control template="/afip/tecno/form/controls/textarea.ftl">
 							<control-param name="style">width: 95%</control-param>
 						</control>
 					</field>
+					<field id="tecno:tipoServicio" set="row3" />
+					<field id="tecno:otroTipoServicio" set="row3" />
+					<field id="tecno:periodicidad" set="row3" />
 
-					<field id="tecno:areaResponsable" label-id="prop.tecno_areaResponsable" />
-					<field id="tecno:direccion" label-id="prop.tecno_direccion" />
-					<field id="tecno:domicilio" label-id="prop.tecno_domicilio" />
-					<field id="tecno:expediente" label-id="prop.tecno_expediente" />
-					<field id="tecno:ordenCompra" label-id="prop.tecno_ordenCompra" />
-					<field id="tecno:fechaInicio" label-id="prop.tecno_fechaInicio" />
-					<field id="tecno:fechaVencimiento" label-id="prop.tecno_fechaVencimiento" />
-					<field id="tecno:objetoServicio" label-id="prop.tecno_objetoServicio" />
-					<field id="tecno:adjuntos" label-id="prop.tecno_adjuntos" />
-					<field id="tecno:items" label-id="prop.tecno_items">
+					<field id="tecno:periodoDesde" set="periodo" />
+					<field id="tecno:periodoHasta" set="periodo" />
+
+					<field id="tecno:proveedor" set="row4" />
+					<field id="tecno:cuitProveedor" set="row4" />
+
+					<field id="tecno:remitoNumero" set="row5" />
+					<field id="tecno:facturaNumero" set="row5" />
+
+					<field id="tecno:regimenContratacion" set="row6" />
+
+					<field id="tecno:notaCredito" set="row7" />
+					<field id="tecno:notaDebito" set="row7" />
+
+					<field id="tecno:items" set="row8">
 						<control template="/org/alfresco/form/controls/datatable-property.ftl">
 							<control-param name="config"><![CDATA[
 								nroRenglon, N° Renglon, number; 
 								item, Item, number;
 								cantServiciosOC, Cant Servicios O/C, number;
-								nroServicioTotOC, N° Servicio del total de la O/C, number;
+								nroServicioTotOC, N° Servicio, number;
 								cantidad, Cantidad , number;
 								precioUnitario, Precio Unitario, currency;
 								precioTotal, Precio Total, currency; 
-								observaciones, Observaciones, text;
-								posicionSigma, Posición Sigma, text;
 							]]></control-param>
 							<control-param name="debug">false</control-param>
 						</control>
 					</field>
-					<field id="cm:sentdate" read-only="true" />
-					<field id="cm:subjectline" read-only="true" />
-					<field id="cm:replaces" label-id="assoc.cm_replaces" />
-
-					<field id="packageItems" set="items" />
-					<field id="transitions" set="response" />
+					<field id="packageItems" set="row8" />
+					<field id="transitions" set="row8" />
 				</appearance>
 			</form>
 		</forms>
@@ -93,13 +163,120 @@
 		<forms>
 			<form>
 				<field-visibility>
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:tipoServicio" />
+					<show id="tecno:otroTipoServicio" />
+					<show id="tecno:periodicidad" />
+
+					<show id="tecno:periodoDesde" />
+					<show id="tecno:periodoHasta" />
+
+					<show id="tecno:proveedor" />
+					<show id="tecno:cuitProveedor" />
+
+					<show id="tecno:remitoNumero" />
+					<show id="tecno:facturaNumero" />
+
+					<show id="tecno:regimenContratacion" />
+
+					<show id="tecno:notaCredito" />
+					<show id="tecno:notaDebito" />
+
+					<show id="tecno:items" />
+
+					<show id="packageItems" />
+					<show id="transitions" />
+
 					<show id="tecnowf:conforme" />
 					<show id="transitions" />
 				</field-visibility>
 				<appearance>
-					<set id="response" appearance="title" label-id="workflow.set.response" />
-					<field id="tecnowf:conforme" set="response" />
-					<field id="transitions" set="response" />
+					<set id="title" appearance="title" label-id="workflow.tecnowf_conformidad.form1900" />
+					<set id="body" appearance="whitespace" parent="title" />
+
+					<set id="row1" appearance="whitespace" parent="body" />
+					<set id="row2" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="vigencia" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.vigencia"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row3" appearance="whitespace" parent="body" />
+					<set id="periodo" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.periodo"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row4" appearance="whitespace" parent="body" />
+					<set id="row5" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row6" appearance="whitespace" parent="body" />
+					<set id="incumplimiento" appearance="bordered-panel"
+						label-id="workflow.tecnowf_conformidad.incumplimiento" parent="body" />
+					<set id="row7" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row8" appearance="whitespace" parent="body" />
+
+					<field id="tecno:areaResponsable" set="row1" read-only="true" />
+					<field id="tecno:direccion" set="row1" read-only="true">
+						<control template="/afip/tecno/form/controls/selectone.ftl" />
+					</field>
+					<field id="tecno:domicilio" set="row1" read-only="true" />
+
+					<field id="tecno:expediente" set="row2" read-only="true" />
+					<field id="tecno:ordenCompra" set="row2" read-only="true" />
+
+					<field id="tecno:fechaInicio" set="vigencia" read-only="true" />
+					<field id="tecno:fechaVencimiento" set="vigencia" read-only="true" />
+
+					<field id="tecno:objetoServicio" set="row3" read-only="true">
+						<control template="/afip/tecno/form/controls/textarea.ftl">
+							<control-param name="style">width: 95%</control-param>
+						</control>
+					</field>
+					<field id="tecno:tipoServicio" set="row3" read-only="true" />
+					<field id="tecno:otroTipoServicio" set="row3" read-only="true" />
+					<field id="tecno:periodicidad" set="row3" read-only="true" />
+
+					<field id="tecno:periodoDesde" set="periodo" read-only="true" />
+					<field id="tecno:periodoHasta" set="periodo" read-only="true" />
+
+					<field id="tecno:proveedor" set="row4" read-only="true" />
+					<field id="tecno:cuitProveedor" set="row4" read-only="true" />
+
+					<field id="tecno:remitoNumero" set="row5" read-only="true" />
+					<field id="tecno:facturaNumero" set="row5" read-only="true" />
+
+					<field id="tecno:regimenContratacion" set="row6" read-only="true" />
+
+					<field id="tecnowf:conforme" set="incumplimiento">
+						<control template="/afip/tecno/form/controls/selectone.ftl" />
+					</field>
+
+					<field id="tecno:notaCredito" set="row7" read-only="true" />
+					<field id="tecno:notaDebito" set="row7" read-only="true" />
+
+					<field id="tecno:items" set="row8" read-only="true">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config"><![CDATA[
+								nroRenglon, N° Renglon, number; 
+								item, Item, number;
+								cantServiciosOC, Cant Servicios O/C, number;
+								nroServicioTotOC, N° Servicio, number;
+								cantidad, Cantidad , number;
+								precioUnitario, Precio Unitario, currency;
+								precioTotal, Precio Total, currency; 
+							]]></control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
+					<field id="packageItems" set="row8" />
+					<field id="transitions" set="row8" />
 				</appearance>
 			</form>
 		</forms>
@@ -109,13 +286,129 @@
 		<forms>
 			<form>
 				<field-visibility>
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:tipoServicio" />
+					<show id="tecno:otroTipoServicio" />
+					<show id="tecno:periodicidad" />
+
+					<show id="tecno:periodoDesde" />
+					<show id="tecno:periodoHasta" />
+
+					<show id="tecno:proveedor" />
+					<show id="tecno:cuitProveedor" />
+
+					<show id="tecno:remitoNumero" />
+					<show id="tecno:facturaNumero" />
+
+					<show id="tecno:regimenContratacion" />
+
+					<show id="tecno:notaCredito" />
+					<show id="tecno:notaDebito" />
+
+					<show id="tecno:items" />
+
+					<show id="packageItems" />
+					<show id="transitions" />
+
+					<show id="tecno:numero" />
+					<show id="tecno:motivo" />
+					<show id="tecno:importe" />
+
 					<show id="tecnowf:aprobado" />
 					<show id="transitions" />
 				</field-visibility>
 				<appearance>
-					<set id="response" appearance="title" label-id="workflow.set.response" />
-					<field id="tecnowf:aprobado" set="response" />
-					<field id="transitions" set="response" />
+					<set id="title" appearance="title" label-id="workflow.tecnowf_conformidad.form1900" />
+					<set id="body" appearance="whitespace" parent="title" />
+
+					<set id="row1" appearance="whitespace" parent="body" />
+					<set id="row2" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="vigencia" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.vigencia"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row3" appearance="whitespace" parent="body" />
+					<set id="periodo" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.periodo"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row4" appearance="whitespace" parent="body" />
+					<set id="row5" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row6" appearance="whitespace" parent="body" />
+					<set id="incumplimiento" appearance="bordered-panel"
+						label-id="workflow.tecnowf_conformidad.incumplimiento" parent="body" />
+					<set id="row7" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row8" appearance="whitespace" parent="body" />
+					<set id="aprobacion" appearance="bordered-panel"
+						label-id="workflow.tecnowf_conformidad.aprobacion" parent="body" />
+
+					<field id="tecno:areaResponsable" set="row1" read-only="true" />
+					<field id="tecno:direccion" set="row1" read-only="true">
+						<control template="/afip/tecno/form/controls/selectone.ftl" />
+					</field>
+					<field id="tecno:domicilio" set="row1" read-only="true" />
+
+					<field id="tecno:expediente" set="row2" read-only="true" />
+					<field id="tecno:ordenCompra" set="row2" read-only="true" />
+
+					<field id="tecno:fechaInicio" set="vigencia" read-only="true" />
+					<field id="tecno:fechaVencimiento" set="vigencia" read-only="true" />
+
+					<field id="tecno:objetoServicio" set="row3" read-only="true">
+						<control template="/afip/tecno/form/controls/textarea.ftl">
+							<control-param name="style">width: 95%</control-param>
+						</control>
+					</field>
+					<field id="tecno:tipoServicio" set="row3" read-only="true" />
+					<field id="tecno:otroTipoServicio" set="row3" read-only="true" />
+					<field id="tecno:periodicidad" set="row3" read-only="true" />
+
+					<field id="tecno:periodoDesde" set="periodo" read-only="true" />
+					<field id="tecno:periodoHasta" set="periodo" read-only="true" />
+
+					<field id="tecno:proveedor" set="row4" read-only="true" />
+					<field id="tecno:cuitProveedor" set="row4" read-only="true" />
+
+					<field id="tecno:remitoNumero" set="row5" read-only="true" />
+					<field id="tecno:facturaNumero" set="row5" read-only="true" />
+
+					<field id="tecno:regimenContratacion" set="row6" read-only="true" />
+
+					<field id="tecno:numero" set="incumplimiento" read-only="true" />
+					<field id="tecno:motivo" set="incumplimiento" read-only="true" />
+					<field id="tecno:importe" set="incumplimiento" read-only="true" />
+
+					<field id="tecno:notaCredito" set="row7" read-only="true" />
+					<field id="tecno:notaDebito" set="row7" read-only="true" />
+
+					<field id="tecno:items" set="row8" read-only="true">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config"><![CDATA[
+								nroRenglon, N° Renglon, number; 
+								item, Item, number;
+								cantServiciosOC, Cant Servicios O/C, number;
+								nroServicioTotOC, N° Servicio, number;
+								cantidad, Cantidad , number;
+								precioUnitario, Precio Unitario, currency;
+								precioTotal, Precio Total, currency; 
+							]]></control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
+					
+					<field id="packageItems" set="row8" />
+					<field id="transitions" set="row8" />
+					
+					<field id="tecnowf:aprobado" set="aprobacion" />
 				</appearance>
 			</form>
 		</forms>
@@ -125,20 +418,125 @@
 		<forms>
 			<form>
 				<field-visibility>
-					<show id="tecnowf:montoPenalidad" />
-					<show id="tecnowf:observaciones" />
+					<show id="tecno:areaResponsable" />
+					<show id="tecno:direccion" />
+					<show id="tecno:domicilio" />
+
+					<show id="tecno:expediente" />
+					<show id="tecno:ordenCompra" />
+
+					<show id="tecno:fechaInicio" />
+					<show id="tecno:fechaVencimiento" />
+
+					<show id="tecno:objetoServicio" />
+					<show id="tecno:tipoServicio" />
+					<show id="tecno:otroTipoServicio" />
+					<show id="tecno:periodicidad" />
+
+					<show id="tecno:periodoDesde" />
+					<show id="tecno:periodoHasta" />
+
+					<show id="tecno:proveedor" />
+					<show id="tecno:cuitProveedor" />
+
+					<show id="tecno:remitoNumero" />
+					<show id="tecno:facturaNumero" />
+
+					<show id="tecno:regimenContratacion" />
+
+					<show id="tecno:notaCredito" />
+					<show id="tecno:notaDebito" />
+
+					<show id="tecno:items" />
+
+					<show id="packageItems" />
+					<show id="transitions" />
+
+					<show id="tecnowf:aprobado" />
+
+					<show id="tecno:numero" />
+					<show id="tecno:motivo" />
+					<show id="tecno:importe" />
 					<show id="transitions" />
 				</field-visibility>
 				<appearance>
-					<set id="" appearance="title" label-id="workflow.tecnowf_cuantificarPenalidad.title" />
-					<set id="response" appearance="title" label-id="workflow.set.response" />
-					<field id="tecnowf:montoPenalidad" label-id="workflow.tecnowf_cuantificarPenalidad.montoPenalidad" />
-					<field id="tecnowf:observaciones" label-id="workflow.tecnowf_cuantificarPenalidad.observaciones">
-						<control template="/org/alfresco/components/form/controls/textarea.ftl">
+					<set id="title" appearance="title" label-id="workflow.tecnowf_conformidad.form1900" />
+					<set id="body" appearance="whitespace" parent="title" />
+
+					<set id="row1" appearance="whitespace" parent="body" />
+					<set id="row2" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="vigencia" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.vigencia"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row3" appearance="whitespace" parent="body" />
+					<set id="periodo" appearance="bordered-panel" label-id="workflow.tecnowf_conformidad.periodo"
+						parent="body" template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row4" appearance="whitespace" parent="body" />
+					<set id="row5" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row6" appearance="whitespace" parent="body" />
+					<set id="incumplimiento" appearance="bordered-panel"
+						label-id="workflow.tecnowf_conformidad.incumplimiento" parent="body" />
+					<set id="row7" appearance="whitespace" parent="body"
+						template="/org/alfresco/components/form/2-column-set.ftl" />
+					<set id="row8" appearance="whitespace" parent="body" />
+
+					<field id="tecno:areaResponsable" set="row1" read-only="true" />
+					<field id="tecno:direccion" set="row1" read-only="true">
+						<control template="/afip/tecno/form/controls/selectone.ftl" />
+					</field>
+					<field id="tecno:domicilio" set="row1" read-only="true" />
+
+					<field id="tecno:expediente" set="row2" read-only="true" />
+					<field id="tecno:ordenCompra" set="row2" read-only="true" />
+
+					<field id="tecno:fechaInicio" set="vigencia" read-only="true" />
+					<field id="tecno:fechaVencimiento" set="vigencia" read-only="true" />
+
+					<field id="tecno:objetoServicio" set="row3" read-only="true">
+						<control template="/afip/tecno/form/controls/textarea.ftl">
 							<control-param name="style">width: 95%</control-param>
 						</control>
 					</field>
-					<field id="transitions" set="response" />
+					<field id="tecno:tipoServicio" set="row3" read-only="true" />
+					<field id="tecno:otroTipoServicio" set="row3" read-only="true" />
+					<field id="tecno:periodicidad" set="row3" read-only="true" />
+
+					<field id="tecno:periodoDesde" set="periodo" read-only="true" />
+					<field id="tecno:periodoHasta" set="periodo" read-only="true" />
+
+					<field id="tecno:proveedor" set="row4" read-only="true" />
+					<field id="tecno:cuitProveedor" set="row4" read-only="true" />
+
+					<field id="tecno:remitoNumero" set="row5" read-only="true" />
+					<field id="tecno:facturaNumero" set="row5" read-only="true" />
+
+					<field id="tecno:regimenContratacion" set="row6" read-only="true" />
+
+					<field id="tecno:numero" set="incumplimiento" />
+					<field id="tecno:motivo" set="incumplimiento" />
+					<field id="tecno:importe" set="incumplimiento" />
+
+					<field id="tecno:notaCredito" set="row7" read-only="true" />
+					<field id="tecno:notaDebito" set="row7" read-only="true" />
+
+					<field id="tecno:items" set="row8" read-only="true">
+						<control template="/org/alfresco/form/controls/datatable-property.ftl">
+							<control-param name="config"><![CDATA[
+								nroRenglon, N° Renglon, number; 
+								item, Item, number;
+								cantServiciosOC, Cant Servicios O/C, number;
+								nroServicioTotOC, N° Servicio, number;
+								cantidad, Cantidad , number;
+								precioUnitario, Precio Unitario, currency;
+								precioTotal, Precio Total, currency; 
+							]]></control-param>
+							<control-param name="debug">false</control-param>
+						</control>
+					</field>
+
+					<field id="packageItems" set="row8" />
+					<field id="transitions" set="row8" />
 				</appearance>
 			</form>
 		</forms>
@@ -156,8 +554,8 @@
 			<action id="comprobante" type="javascript" label="actions.tecno.comprobante">
 				<param name="function">onWSCaller</param>
 				<param name="webscript">tecno/conformidad/comprobante?nodeRef={nodeRef}</param>
-				<evaluator>tecno.evaluator.doclib.action.isForm1900</evaluator>
-				<evaluator>tecno.evaluator.doclib.action.worflowFinished</evaluator>
+				<!-- <evaluator>tecno.evaluator.doclib.action.isForm1900</evaluator> -->
+				<!-- <evaluator>tecno.evaluator.doclib.action.worflowFinished</evaluator> -->
 			</action>
 		</actions>
 
@@ -404,7 +802,7 @@
 					<show id="tecno:importe" />
 				</field-visibility>
 				<appearance>
-					<field id="tecno:motivo" label-id="prop.tecno_numero" />
+					<field id="tecno:numero" label-id="prop.tecno_numero" />
 					<field id="tecno:motivo" label-id="prop.tecno_motivo" />
 					<field id="tecno:importe" label-id="prop.tecno_importe" />
 				</appearance>

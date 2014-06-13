@@ -12,6 +12,7 @@
 					<fo:region-body />
 				</fo:simple-page-master>
 			</fo:layout-master-set>
+
 			<fo:page-sequence master-reference="simpleA4">
 				<fo:flow flow-name="xsl-region-body">
 					<fo:block font-size="16pt" font-weight="bold" space-after="5mm">
@@ -20,9 +21,8 @@
 					</fo:block>
 					<fo:block font-size="10pt">
 						<fo:table table-layout="fixed" width="100%" border-collapse="separate">
-							<fo:table-column column-width="4cm" />
-							<fo:table-column column-width="4cm" />
-							<fo:table-column column-width="5cm" />
+							<fo:table-column column-width="30%" />
+							<fo:table-column column-width="70%" />
 							<fo:table-body>
 								<xsl:apply-templates select="entry" />
 							</fo:table-body>
@@ -35,15 +35,12 @@
 
 	<xsl:template match="entry">
 		<fo:table-row>
-			<xsl:if test="function = 'lead'">
-				<xsl:attribute name="font-weight">bold</xsl:attribute>
-			</xsl:if>
-			<fo:table-cell>
-				<fo:block>
+			<fo:table-cell background-color="rgb(200,200,200)" border-bottom-style="solid">
+				<fo:block font-weight="bold">
 					<xsl:value-of select="key" />
 				</fo:block>
 			</fo:table-cell>
-			<fo:table-cell>
+			<fo:table-cell background-color="rgb(200,200,200)" border-bottom-style="solid">
 				<fo:block>
 					<xsl:value-of select="value" />
 				</fo:block>

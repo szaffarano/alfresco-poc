@@ -29,7 +29,7 @@
 		</type>
 
 		<type name="tecnowf:conformidadForm1900">
-			<parent>bpm:activitiOutcomeTask</parent>
+			<parent>tecnowf:form1900</parent>
 			<properties>
 				<property name="tecnowf:conforme">
 					<type>d:text</type>
@@ -57,26 +57,22 @@
 		</type>
 
 		<type name="tecnowf:cuantificacionPenalidad">
-			<parent>bpm:workflowTask</parent>
-			<properties>
-				<property name="tecnowf:montoPenalidad">
-					<type>d:double</type>
-				</property>
-				<property name="tecnowf:observaciones">
-					<type>d:text</type>
-				</property>
-			</properties>
+			<parent>tecnowf:conformidadForm1900</parent>
 			<overrides>
 				<property name="bpm:packageItemActionGroup">
 					<default>read_package_item_actions</default>
 				</property>
 			</overrides>
+			<mandatory-aspects>
+				<aspect>tecno:incumplido</aspect>
+			</mandatory-aspects>
 		</type>
 
 		<type name="tecnowf:aprobacionForm1900">
-			<parent>bpm:activitiOutcomeTask</parent>
+			<parent>tecnowf:cuantificacionPenalidad</parent>
 			<properties>
 				<property name="tecnowf:aprobado">
+					<title>Aprobar</title>
 					<type>d:text</type>
 					<default>Aprobar</default>
 					<constraints>

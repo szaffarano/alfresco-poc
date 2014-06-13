@@ -31,13 +31,7 @@
 			<title>Formulario Conformidad</title>
 			<description>Formulario de Conformidad de Servicios</description>
 			<parent>cm:content</parent>
-			<properties>
-				<property name="tecno:workflowFinished">
-					<title>Finalizado</title>
-					<type>d:boolean</type>
-					<mandatory>true</mandatory>
-				</property>
-			</properties>
+
 			<associations>
 				<child-association name="tecno:adjuntos">
 					<title>Archivos adjuntos</title>
@@ -53,28 +47,16 @@
 					</target>
 				</child-association>
 			</associations>
+
 			<mandatory-aspects>
 				<aspect>tecno:form1900Data</aspect>
 			</mandatory-aspects>
 		</type>
-
-		<type name="scr:rating">
-			<title>Tecno Rating</title>
-			<parent>sys:base</parent>
-			<properties>
-				<property name="scr:rating">
-					<type>d:int</type>
-					<mandatory>true</mandatory>
-				</property>
-				<property name="scr:rater">
-					<type>d:text</type>
-					<mandatory>true</mandatory>
-				</property>
-			</properties>
-		</type>
 	</types>
 
 	<aspects>
+		<aspect name="tecno:conformidadFinalizada"/>
+
 		<aspect name="tecno:incumplido">
 			<title>Descuento por incumplimiento</title>
 			<properties>
@@ -99,13 +81,13 @@
 				<property name="tecno:areaResponsable">
 					<title>Area Responsable</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:direccion">
 					<title>Dirección a la cual reporta</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
-					<multiple>true</multiple>
+					<mandatory>false</mandatory>
+					<multiple>false</multiple>
 					<constraints>
 						<constraint ref="tecno:direcciones" />
 					</constraints>
@@ -113,22 +95,22 @@
 				<property name="tecno:domicilio">
 					<title>Domicilio de la prestación</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:expediente">
 					<title>Número de expediente</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:ordenCompra">
 					<title>Orden de compra</title>
 					<type>d:long</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:fechaInicio">
 					<title>Fecha de inicio</title>
 					<type>d:date</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:fechaVencimiento">
 					<title>Fecha de vencimiento</title>
@@ -137,52 +119,77 @@
 				<property name="tecno:objetoServicio">
 					<title>Objeto o Servicio contratado</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:tipoServicio">
+					<title>Tipo de Servicio</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:otroTipoServicio">
+					<title>Detalle de otro tipo de Servicio</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:periodicidad">
+					<title>Periodicidad</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:periodoDesde">
+					<title>Período desde</title>
+					<type>d:int</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:periodoHasta">
+					<title>Período hasta</title>
+					<type>d:int</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:proveedor">
+					<title>Proveedor del servicio</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:cuitProveedor">
+					<title>CUIT del proveedor</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:remitoNumero">
+					<title>Número de remito</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:facturaNumero">
+					<title>Número de factura</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:regimenContratacion">
+					<title>Régimen de la contratación</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+
+				<property name="tecno:notaCredito">
+					<title>Número de nota de crédito</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
+				</property>
+				<property name="tecno:notaDebito">
+					<title>Número de nota de débito</title>
+					<type>d:text</type>
+					<mandatory>false</mandatory>
 				</property>
 				<property name="tecno:items">
 					<title>Renglón / Posición e item de conformidad de acuerdo al pliego</title>
 					<type>d:text</type>
-					<mandatory>true</mandatory>
-				</property>
-				<property name="tecno:enabled">
-					<title>Activo</title>
-					<type>d:boolean</type>
-					<default>true</default>
+					<mandatory>false</mandatory>
 				</property>
 			</properties>
 		</aspect>
 
-		<aspect name="scr:rateable">
-			<title>Tecno Rateable</title>
-			<properties>
-				<property name="scr:averageRating">
-					<type>d:double</type>
-					<mandatory>false</mandatory>
-				</property>
-				<property name="scr:totalRating">
-					<type>d:int</type>
-					<mandatory>false</mandatory>
-				</property>
-				<property name="scr:ratingCount">
-					<type>d:int</type>
-					<mandatory>false</mandatory>
-				</property>
-			</properties>
-			<associations>
-				<child-association name="scr:ratings">
-					<title>Rating</title>
-					<source>
-						<mandatory>false</mandatory>
-						<many>true</many>
-					</source>
-					<target>
-						<class>scr:rating</class>
-						<mandatory>false</mandatory>
-						<many>true</many>
-					</target>
-				</child-association>
-			</associations>
-		</aspect>
 	</aspects>
 
 </model>

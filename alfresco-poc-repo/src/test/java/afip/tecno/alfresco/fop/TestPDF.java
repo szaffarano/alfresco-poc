@@ -1,5 +1,6 @@
 package afip.tecno.alfresco.fop;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import afip.tecno.alfresco.action.ComprobanteConformidadAction;
+import afip.tecno.alfresco.writer.NodeToPDF;
 
 public class TestPDF {
 	private Logger logger = LoggerFactory.getLogger("pdf");
@@ -21,26 +22,30 @@ public class TestPDF {
 		logger.info("Testeando generación de pdf");
 
 		InputStream is = null;
+		FileOutputStream fos = null;
 		try {
-			is = Thread.currentThread().getContextClassLoader().getResourceAsStream("f19002fo.xsl");
 			logger.info("Levantando xsl de resource: " + is);
-			ComprobanteConformidadAction action = new ComprobanteConformidadAction();
 			Map<String, Object> values = new HashMap<String, Object>();
 			values.put("clave1", "valor1");
 			values.put("clave2", "valor2");
 			values.put("clave3", "valor3");
 			values.put("clave4", "valor4");
-			byte[] pdf = action.pdf(values, is);
+			byte[] pdf = new NodeToPDF().convert(values);
 			Assert.assertNotNull(pdf);
 			Assert.assertFalse(pdf.length < 20);
+			fos = new FileOutputStream("/tmp/test.pdf");
+			fos.write(pdf);
 		} catch (Exception e) {
 			Assert.fail(e.getLocalizedMessage());
 		} finally {
-			if (is != null) {
-				try {
+			try {
+				if (is != null) {
 					is.close();
-				} catch (IOException e) {
 				}
+				if (fos != null) {
+					fos.close();
+				}
+			} catch (IOException e) {
 			}
 		}
 	}

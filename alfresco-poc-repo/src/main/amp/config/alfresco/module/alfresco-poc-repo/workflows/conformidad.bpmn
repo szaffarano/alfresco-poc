@@ -30,6 +30,8 @@
 			<extensionElements>
 				<activiti:taskListener event="complete"
 					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.ActualizarPDFFormulario1900ExecutionListener" />
 				<activiti:taskListener event="create"
 					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
@@ -51,6 +53,8 @@
 			<extensionElements>
 				<activiti:taskListener event="complete"
 					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.ActualizarPDFFormulario1900ExecutionListener" />
 				<activiti:taskListener event="create"
 					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
@@ -85,6 +89,8 @@
 			<extensionElements>
 				<activiti:taskListener event="complete"
 					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.ActualizarPDFFormulario1900ExecutionListener" />
 				<activiti:taskListener event="create"
 					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
 				<activiti:taskListener event="complete"
@@ -131,8 +137,12 @@
 			<extensionElements>
 				<activiti:taskListener event="complete"
 					class="afip.tecno.alfresco.workflow.listeners.CompletarFormulario1900ExecutionListener" />
+				<activiti:taskListener event="complete"
+					class="afip.tecno.alfresco.workflow.listeners.ActualizarPDFFormulario1900ExecutionListener" />
 				<activiti:taskListener event="create"
 					class="afip.tecno.alfresco.workflow.listeners.CargarVariablesFormulario1900ExecutionListener" />
+				<activiti:taskListener event="create"
+					class="afip.tecno.alfresco.workflow.listeners.AgregarAspectoIncumplimientoExecutionListener" />
 				<activiti:taskListener event="complete"
 					class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
 					<activiti:field name="script">
